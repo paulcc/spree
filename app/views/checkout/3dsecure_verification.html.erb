@@ -9,7 +9,11 @@ You have chosen to use a card that is part of the 3D-Secure scheme, so you will 
 <img src="/images/mcsc_logo.gif" alt="MasterCard SecureCode">
 
 <div align="center">
+<<<<<<< HEAD:app/views/checkout/3dsecure_verification.html.erb
 <iframe src="/orders/<%= @order.number %>/checkout/secure_form" width="100%" height="620" frameborder=0>
+=======
+<iframe src="/orders/<%= @order.number %>/checkout/secure_form" width="450" height="420" frameborder=0>
+>>>>>>> 3369b278a13cc4535784d5ec4a5fa7ded154eb4a:app/views/checkout/3dsecure_verification.html.erb
 <% session["3Dform"] %>
 </iframe>
 </div>
