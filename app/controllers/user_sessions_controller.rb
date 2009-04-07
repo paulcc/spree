@@ -9,7 +9,7 @@ class UserSessionsController < Spree::BaseController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = t("logged_in_successfully")
+      ## disable ## flash[:notice] = t("logged_in_successfully")
       redirect_back_or_default products_path
     else
       flash.now[:error] = t("login_failed")
