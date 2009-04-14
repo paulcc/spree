@@ -8,9 +8,10 @@ class Product < ActiveRecord::Base
   has_many :images, :as => :viewable, :order => :position, :dependent => :destroy
   has_many :product_properties, :dependent => :destroy, :attributes => true
   has_many :properties, :through => :product_properties
+  has_many :product_group_list_nodes
   belongs_to :tax_category
-  has_and_belongs_to_many :taxons
   belongs_to :shipping_category
+  # WHY? has_and_belongs_to_many :taxons
   
 
   validates_presence_of :name

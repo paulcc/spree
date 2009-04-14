@@ -1,0 +1,51 @@
+n01:
+  product_group_list: pg_list_bags
+  product: ror_tote
+n02:
+  product_group_list: pg_list_bags
+  product: ror_bag
+n03:
+  product_group_list: pg_list_mugs
+  product: ror_mug
+n04:
+  product_group_list: pg_list_mugs
+  product: ror_stein
+n05:
+  product_group_list: pg_list_t-shirts
+  product: ror_baseball_jersey
+n06:
+  product_group_list: pg_list_t-shirts
+  product: ror_ringer
+n07:
+  product_group_list: pg_list_t-shirts
+  product: apache_baseball_jersey
+n08:
+  product_group_list: pg_list_t-shirts
+  product: ruby_baseball_jersey
+n09:
+  product_group_list: pg_list_ruby
+  product: ruby_baseball_jersey
+n10:
+  product_group_list: pg_list_ror
+  product: ror_baseball_jersey
+n11:
+  product_group_list: pg_list_ror
+  product: ror_jr_spaghetti
+n12:
+  product_group_list: pg_list_ror
+  product: ror_ringer
+n13:
+  product_group_list: pg_list_ror
+  product: ror_stein
+n14:
+  product_group_list: pg_list_ror
+  product: ror_bag
+n15:
+  product_group_list: pg_list_ror
+  product: ror_tote
+n16:
+  product_group_list: pg_list_ror
+  product: ror_mug
+n18:
+  product_group_list: pg_list_apache
+  product: apache_baseball_jersey

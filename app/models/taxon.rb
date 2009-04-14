@@ -1,9 +1,36 @@
 class Taxon < ActiveRecord::Base
+  include ProductSet
+
   acts_as_adjacency_list :foreign_key => 'parent_id', :order => 'position'
   belongs_to :taxonomy
-  has_and_belongs_to_many :products
+#  has_and_belongs_to_many :products
+  belongs_to :product_group
   before_save :set_permalink  
+
+  validate :product_group_only_on_leaf_node
     
+  def products
+    product_group.products
+  end
+  
+  # This is--for you recursive types--a depth first traversal of
+  # the taxonomy tree.  Union is associative, so we're all good.
+  # Union of ordered sets is somewhat undefined, but we are not going
+  # to treat that here.  That is going to be up to the ProductSet
+  # module and the union method to handle...probably.
+  alias :ar_associated_product_group :product_group
+  def product_group
+    if self.leaf?
+      return ar_associated_product_group
+    else
+      @product_group = children.first.product_group
+      children[0..-2].each_index do |i|
+        @product_group = @product_group.union(children[i+1].product_group)
+      end
+      return @product_group
+    end
+  end
+
   private
   def set_permalink
     ancestors.reverse.collect { |ancestor| ancestor.name }.join( "/")
@@ -24,5 +51,11 @@ class Taxon < ActiveRecord::Base
       s.gsub!(/([^ a-zA-Z0-9_-]+)/n,"") # and now kill every char not allowed.
     end
   end
-  
+
+  def product_group_only_on_leaf_node
+    if !self.product_group.nil? && !self.leaf?
+      error.add_to_base("Cannot assign a product group to a non leaf node taxon")
+    end
+  end
+
 end

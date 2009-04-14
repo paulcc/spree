@@ -1,0 +1,25 @@
+category_bags:
+  name: category_bags
+  group: pg_list_bags (ProductGroupList)
+  anonymous: false
+category_mugs:
+  name: category_mugs
+  group: pg_list_mugs (ProductGroupList)
+  anonymous: false
+category_t-shirts:
+  name: category_t-shirts
+  group: pg_list_t-shirts (ProductGroupList)
+  anonymous: false
+brand_ruby:
+  name: brand_ruby
+  group: pg_list_ruby (ProductGroupList)
+  anonymous: false
+brand_ruby-on-rails:
+  name: brand_ruby-on-rails
+  group: pg_list_ror (ProductGroupList)
+  anonymous: false
+brand_apache:
+  name: brand_apache
+  group: pg_list_apache (ProductGroupList)
+  anonymous: false
+
