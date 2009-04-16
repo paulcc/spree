@@ -23,7 +23,7 @@ class OrdersController < Spree::BaseController
       @order.add_variant(Variant.find(variant_id), quantity) if quantity > 0
     end if params[:variants]
     
-    @order.save
+    @order.save!
   end
 
   # override the default r_c behavior (remove flash - redirect to edit details instead of show)
