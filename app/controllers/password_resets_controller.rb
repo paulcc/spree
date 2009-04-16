@@ -14,7 +14,9 @@ class PasswordResetsController < Spree::BaseController
       redirect_to root_url
     else
       flash[:notice] = t("no_user_found")
-      render :action => :new
+      @user = User.new :email => params[:email]
+      @email = params[:email]
+      render :template => 'users/new'
     end
   end
 

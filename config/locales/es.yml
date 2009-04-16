@@ -4,6 +4,7 @@ es:
   abbreviation: Abbreviation
   access_denied: "Access Denied"   
   account: Cuenta
+  account_updated: "Account updated!"        
   action: Acción
   actions: 
     cancel: Cancelar
@@ -163,6 +164,7 @@ es:
   allow_backorders: "Allow Backorders"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode         
+  alternative_phone: Alternative Phone
   amount: Cuantía
   are_you_sure: "Are you sure"
   are_you_sure_category: "¿Está seguro de que quiere eliminar esta categoría?"
@@ -192,6 +194,7 @@ es:
   change_language: "Cambiar Idioma"
   charged: Charged
   checkout: Pagar
+  checkout_had_errors: The checkout details contained one or more errors
   city: Ciudad
   comp_order: "Comp Order"
   comp_order_confirmation: ""
@@ -242,11 +245,26 @@ es:
   expiration: "Expiration"
   expiration_month: "Mes de vencimiento"
   expiration_year: "Año de vencimiento"
+  ext_shipping_calculator: Calculator
+  ext_shipping_cost: Cost
+  ext_shipping_editing_shipping_category: "Editing Shipping Category"
+  ext_shipping_editing_shipping_method: "Editing Shipping Method"
+  ext_shipping_mark_shipped: "Mark Shipped"
+  ext_shipping_method: Method
+  ext_shipping_new_shipping_category: "New Shipping Category"
+  ext_shipping_new_shipping_method: "New Shipping Method"
+  ext_shipping_shipment_number: "Shipment #"
+  ext_shipping_shipping_categories: "Shipping Categories"
+  ext_shipping_shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  ext_shipping_shipping_methods: "Shipping Methods"
+  ext_shipping_shipping_methods_description: "Manage shipping methods"
+  ext_shipping_tracking: Tracking
   extension: Extensión
   extensions: Extensiones
   filename: "Nombre de archivo"
   final_confirmation: "Confirmación Final"
   first_name: Nombre
+  forgot_password: "Forgot Password"
   gateway: ""
   gateway_error: "Gateway Error"
   gateway_setting_description: ""
@@ -284,8 +302,9 @@ es:
   locale_changed: "Se ha cambiado el idioma"
   log_in: "Iniciar sesión"
   logged_in_as: "Identificado como"
-  logged_in_successfully: "Logged in successfully."
-  login_authentication_failed: "Login authentication failed."
+  logged_in_succesfully: "Logged in successfully"
+  logged_out: "You have been logged out." 
+  login_failed: "Login authentication failed."      
   login_name: "Nombre de usuario"
   logout: "Cerrar sesión"
   mail_delivery_enabled:
@@ -318,6 +337,7 @@ es:
   next: próximo
   no_items_in_cart: "La cesta está vacía"
   no_match_found: "No Match Found"
+  no_user_found: "No user was found with that email address"
   none: ""
   none_available: "No hay nada que mostrar"
   on_hand: "On Hand"
@@ -344,6 +364,10 @@ es:
   paid: Paid
   parent_category: "Categoría padre"
   password: Contraseña
+  password_reset_instructions: "Password Reset Instructions"
+  password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
+  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."    
+  password_updated: "Password successfully updated"  
   path: Path
   pay: pay
   payment: Pago
@@ -365,6 +389,7 @@ es:
   products: Productos
   properties: ""
   property: ""
+  prototype: Prototype
   prototypes: ""
   qty: Cant.
   rate: Rate
@@ -372,6 +397,7 @@ es:
   remove: ""
   reports: Reportes
   resend: "Volver a enviar"
+  reset_password: "Reset my password"
   response_code: "Código de respuesta"
   resume: "resume"
   resumed: Resumed
@@ -387,6 +413,7 @@ es:
   secure_connection_type: Secure Connection Type
   select: Seleccionar
   select_from_prototype: ""
+  select_preferred_shipping_option: "Select preferred shipping option"
   send_copy_of_all_mails_to: Send Copy of All Mails To
   send_copy_of_orders_mails_to: Send Copy of Order Mails To         
   send_mails_as: Send Mails As                    
@@ -398,6 +425,7 @@ es:
   shipping: Envío
   shipping_address: "Dirección de envío"
   shipping_error: "Shipping Error"
+  shipping_instructions: "Shipping Instructions"
   shipping_method: "Método de envío"
   shipping_total: "Total de envío"
   shopping_cart: "Cesta de compras"
@@ -406,6 +434,8 @@ es:
   show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Show out-of-stock products"
   sign_up: Registrarme
+  site_name: "Site Name"
+  site_url: "Site URL"
   sku: Código
   smtp: SMTP
   smtp_authentication_type: SMTP Authentication Type         
@@ -452,6 +482,7 @@ es:
   unable_to_capture_credit_card: "Unable to Capture Credit Card"
   unable_to_save_order: "Unable to Save Order"
   update: Actualizar
+  update_password: "Update my password and log me in"                    
   updated_successfully:
   use_as_shipping_address: Use as Shipping Address
   use_billing_address: Use Billing Address
@@ -478,18 +509,3 @@ es:
   zone_based: "Zone Based"
   zone_setting_description: ""
   zones: Zones
-  ext_shipping_calculator: Calculator
-  ext_shipping_cost: Cost
-  ext_shipping_editing_shipping_category: "Editing Shipping Category"
-  ext_shipping_editing_shipping_method: "Editing Shipping Method"
-  ext_shipping_mark_shipped: "Mark Shipped"
-  ext_shipping_method: Method
-  ext_shipping_new_shipping_category: "New Shipping Category"
-  ext_shipping_new_shipping_method: "New Shipping Method"
-  ext_shipping_shipment_number: "Shipment #"
-  ext_shipping_shipping_categories: "Shipping Categories"
-  ext_shipping_shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
-  ext_shipping_shipping_methods: "Shipping Methods"
-  ext_shipping_shipping_methods_description: "Manage shipping methods"
-  ext_shipping_tracking: Tracking
-  select_preferred_shipping_option: "Select preferred shipping option"

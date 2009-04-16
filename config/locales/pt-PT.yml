@@ -4,6 +4,7 @@ pt-PT:
   abbreviation: Abreviação
   access_denied: "Accesso Recusado"             
   account: Conta
+  account_updated: "Account updated!"        
   action: Acção
   actions: 
     cancel: Cancelar
@@ -56,6 +57,7 @@ pt-PT:
         master_price: "Preço Base"
         name: Nome
         on_hand: "Em Stock"
+        shipping_category: "Shipping Category"
       property: 
         name: Nome
         presentation: Apresentação
@@ -124,6 +126,9 @@ pt-PT:
       role: 
         one: Função
         other: Funções
+      shipping_category: 
+        one: "Shipping Category"
+        other: "Shipping Categories"
       state: 
         one: Status
         other: Status
@@ -159,6 +164,7 @@ pt-PT:
   allow_backorders: "Allow Backorders"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Allow SSL to be used when in development and test modes
   allow_ssl_to_be_used_when_in_production_mode: Allow SSL to be used in production mode         
+  alternative_phone: Alternative Phone
   amount: Valor
   are_you_sure: "Tem a certeza"
   are_you_sure_category: "Tem certeza que quer apagar esta categoria?"
@@ -188,6 +194,7 @@ pt-PT:
   change_language: "Mudar Idioma"
   charged: Debitado
   checkout: Finalizar
+  checkout_had_errors: The checkout details contained one or more errors
   city: Cidade
   comp_order: "Calcular Encomenda"
   comp_order_confirmation: "O cliente não será cobrado. Tem certeza que quer calcular esta encomenda?"
@@ -238,11 +245,26 @@ pt-PT:
   expiration: "Expiration"
   expiration_month: "Mês de Expiração"
   expiration_year: "Ano de Expiração"
+  ext_shipping_calculator: Calculator
+  ext_shipping_cost: Cost
+  ext_shipping_editing_shipping_category: "Editing Shipping Category"
+  ext_shipping_editing_shipping_method: "Editing Shipping Method"
+  ext_shipping_mark_shipped: "Mark Shipped"
+  ext_shipping_method: Method
+  ext_shipping_new_shipping_category: "New Shipping Category"
+  ext_shipping_new_shipping_method: "New Shipping Method"
+  ext_shipping_shipment_number: "Shipment #"
+  ext_shipping_shipping_categories: "Shipping Categories"
+  ext_shipping_shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  ext_shipping_shipping_methods: "Shipping Methods"
+  ext_shipping_shipping_methods_description: "Manage shipping methods"
+  ext_shipping_tracking: Tracking
   extension: Extensão
   extensions: Extensões
   filename: "Nome do ficheiro"
   final_confirmation: "Confirmação Final"
   first_name: Nome
+  forgot_password: "Forgot Password"
   gateway: Gateway
   gateway_error: "Erro na Gateway"
   gateway_setting_description: "Selecionar um gateway de pagamento e ajustar suas configurações."
@@ -280,8 +302,9 @@ pt-PT:
   locale_changed: "Localização Alterada"
   log_in: Entre
   logged_in_as: "Registado como"
-  logged_in_successfully: "Logged in successfully."
-  login_authentication_failed: "Login authentication failed."
+  logged_in_succesfully: "Logged in successfully"
+  logged_out: "You have been logged out." 
+  login_failed: "Login authentication failed."      
   login_name: "Nome de Login"
   logout: Sair
   mail_delivery_enabled: "Envio de email permitido"
@@ -314,6 +337,7 @@ pt-PT:
   next: Próximo
   no_items_in_cart: "Nr. de itens no carro"
   no_match_found: "Não encontrado"
+  no_user_found: "No user was found with that email address"
   none: Nenhum
   none_available: "Nenhum Disponível"
   on_hand: "Em Stock"
@@ -340,6 +364,10 @@ pt-PT:
   paid: Paid
   parent_category: "Categoria do Pai"
   password: pass
+  password_reset_instructions: "Password Reset Instructions"
+  password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
+  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."    
+  password_updated: "Password successfully updated"  
   path: Path
   pay: Pague
   payment: Pagamento
@@ -361,6 +389,7 @@ pt-PT:
   products: Produtos
   properties: Propriedades
   property: Propriedade
+  prototype: Prototype
   prototypes: Protótipos
   qty: Qt.
   rate: Rate
@@ -368,6 +397,7 @@ pt-PT:
   remove: Remover
   reports: Relatórios
   resend: Reenviar
+  reset_password: "Reset my password"
   response_code: "Código de Resposta"
   resume: "resume"
   resumed: Resumido
@@ -383,6 +413,7 @@ pt-PT:
   secure_connection_type: Secure Connection Type
   select: Selecionar
   select_from_prototype: "Selecionar a partir de Protótipo"
+  select_preferred_shipping_option: "Select preferred shipping option"
   send_copy_of_all_mails_to: Send Copy of All Mails To
   send_copy_of_orders_mails_to: Send Copy of Order Mails To         
   send_mails_as: Send Mails As                    
@@ -394,6 +425,7 @@ pt-PT:
   shipping: Entrega
   shipping_address: "Endereço de Entrega"
   shipping_error: "Erro na Entrega"
+  shipping_instructions: "Shipping Instructions"
   shipping_method: "Método de Entrega"
   shipping_total: "Total de Entrega"
   shopping_cart: "Carro de Compra"
@@ -402,6 +434,8 @@ pt-PT:
   show_only_complete_orders: "Only show complete orders"
   show_out_of_stock_products: "Mostra produtos sem stock"
   sign_up: Inscrever
+  site_name: "Site Name"
+  site_url: "Site URL"
   sku: SKU
   smtp: SMTP
   smtp_authentication_type: SMTP Authentication Type         
@@ -448,6 +482,7 @@ pt-PT:
   unable_to_capture_credit_card: "Unable to Capture Credit Card"
   unable_to_save_order: "Unable to Save Order"
   update: Actualizar
+  update_password: "Update my password and log me in"                    
   updated_successfully: Actualizado com sucesso
   use_as_shipping_address: Use as Shipping Address
   use_billing_address: Use Billing Address

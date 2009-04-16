@@ -321,6 +321,10 @@ span.current_page {
 .breadcrumbs img {
   padding-left: 5px;
 }
+
+#breadcrumbs span.divider {
+  padding: 5px 5px;
+}
 /* ===================== end: Breadcrumbs =====================*/
 
 /** ================ begin: product-related =================== */
