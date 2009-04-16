@@ -13,7 +13,8 @@ class UserSessionsController < Spree::BaseController
       redirect_back_or_default products_path
     else
       flash.now[:error] = t("login_failed")
-      render :action => :new
+      @user = User.new :email => params[:user_session][:email]
+      render :template => 'users/new'
     end
   end
 
