@@ -28,33 +28,35 @@ class CheckoutController < Spree::BaseController
         form = result.call(callback, '<input type="submit" value="' + t("click_to_begin_3d_secure_verification") + '">') 
         session["3Dform"] = form 
         redirect_to :action => '3dsecure_verification'
+
       elsif result.is_a?(CreditcardTxn)
         # remove the order from the session
         session[:order_id] = nil if @order.checkout_complete  
 
-        # speculative - surely the only place this can be called????
-        # puts "$$$$$$$$$$$$$$$$$$ place - 1st time"
         respond_to do |format|
           format.html {redirect_to order_url(@order, :checkout_complete => true) }
-          format.js {render :json => { :order => @checkout_presenter.order_hash, 
-                                       :available_methods => @order.shipment.rates }.to_json,
-                            :layout => false}
         end
+
       elsif not result.nil?
-        # speculative - surely the only place this can be called????
-        # puts "$$$$$$$$$$$$$$$$$$ place - catchall"
+        # produced some other result which can be reported now as a success
+        raise "unexpected result from saving presenter..."
+
+      else
+        # incomplete result, so return info for AJAX use
         respond_to do |format|
-          format.html {redirect_to order_url(@order, :checkout_complete => true) }
           format.js {render :json => { :order => @checkout_presenter.order_hash, 
                                        :available_methods => @order.shipment.rates }.to_json,
                             :layout => false}
         end
-      else
-        flash[:error] = t("unable_to_save_order")
-        render :action => "new" and return
       end       
     rescue Spree::GatewayError => ge
       flash.now[:error] = t("unable_to_authorize_credit_card") + ": #{ge.message}"
+      render :action => "new" and return 
+    rescue Exception => any
+      flash[:error] = t("unable_to_save_order") + "<br/>" + any.message 
+      puts object.inspect
+      puts any.backtrace
+      puts any.inspect
       render :action => "new" and return 
     end
   end         

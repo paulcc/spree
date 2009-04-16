@@ -23,7 +23,9 @@ class CheckoutPresenter < ActivePresenter::Base
   end 
   
   def save           
-    return false if final_answer and not valid?
+    # TODO: js should give validity, so this line should go eventually
+    raise t('checkout_had_errors') unless final_answer.blank? or valid?
+
     saved = nil
 
     # save and fix the final order details
@@ -39,17 +41,17 @@ class CheckoutPresenter < ActivePresenter::Base
       
       order.ship_amount = order.shipment.shipping_method.calculate_shipping(order.shipment) if order.shipment and order.shipment.shipping_method
       order.tax_amount = order.calculate_tax
-      order.save
+      order.save!
     end
 
     # populate the order hash from the information just set
     order_hash[:ship_amount] = number_to_currency(order.ship_amount)
-    order_hash[:tax_amount] = number_to_currency(order.tax_amount)
+    order_hash[:tax_amount]  = number_to_currency(order.tax_amount)
     order_hash[:order_total] = number_to_currency(order.total)
     order_hash[:ship_method] = order.shipment.shipping_method.name if order.shipment and order.shipment.shipping_method
  
     # do the CC stuff ONLY IF it is definitely the final step
-    if final_answer
+    unless final_answer.blank?
       ActiveRecord::Base.transaction do
         # authorize the credit card and then save 
         # (authorize first before number is cleared for security purposes)
@@ -59,16 +61,17 @@ class CheckoutPresenter < ActivePresenter::Base
         result = creditcard.authorize(order.total)
 
         saved = result
-        creditcard.save 	# TMP, expect all details to go through
+        creditcard.save 	
+          # expect all details to go through - since validation checked in JS and above
+          # PCC: this is superfluous?
+          # PCC: cc is definitely saved (and masked) at this point, where from???
 
         if result.is_a?(CreditcardTxn)
           order.complete
         end 
       end
     end      
-    saved = "speculative" if saved.nil? 
-    # saved = true		## flag for what??? duplicate logic???? TODO
-
+    # still nil here means we just want to report the new partial info via JS
     saved  
   end
 end
