@@ -1,5 +1,5 @@
 module TaxonsHelper
-  def breadcrumbs(taxon)
+  def breadcrumbs(taxon, separator = '&raquo;')
     crumbs = []
     crumbs << link_to(t('products'), products_url)
     if taxon
@@ -8,7 +8,7 @@ module TaxonsHelper
       end
       crumbs << taxon.name
     end
-    content_tag('p', crumbs.join(' <span class="divider">&raquo;</span> '), :id => 'breadcrumbs')
+    content_tag('p', crumbs.join(content_tag(:span, separator, :class => 'divider')), :id => 'breadcrumbs')
   end
 
   
