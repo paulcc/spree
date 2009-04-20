@@ -1,17 +1,11 @@
 # This module implements the product-set interface
+# it requires a products methods that returns an array
+# of products
 module ProductSet
-#  def [](*p)
-#    products[*p]
-#  end
-
-#  def ==(other)
-#    products == other.products
-#  end
-
   def union(other)
     result = products + other.products
     result.uniq!
-    ProductGroupAnonymous.new(result)
+    ProductGroupEphemeral.new(result)
   end
 
   def intersect(other)
@@ -19,11 +13,11 @@ module ProductSet
     products.each do |p|
       result << p if other.products.member?(p)
     end
-    ProductGroupAnonymous.new(result)
+    ProductGroupEphemeral.new(result)
   end
 
   def complement(other)
-    ProductGroupAnonymous.new(products - other.products)
+    ProductGroupEphemeral.new(products - other.products)
   end
 
   # properly known as the symmetric difference
@@ -31,18 +25,9 @@ module ProductSet
   def xor(other)
     self.complement(other).union(other.complement(self))
   end
-
-#  def method_missing(method_id, *args, &block)
-#    if products.respond_to? method_id
-#      return products.send(method_id, *args, &block)
-#    else
-#      return super
-#    end
-#  end
-
 end
 
-class ProductGroupAnonymous
+class ProductGroupEphemeral
   include ProductSet
 
   def initialize(products = [])

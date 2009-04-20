@@ -1,15 +1,6 @@
 class ProductGroupList < ActiveRecord::Base
   has_one :product_group, :as => :group
   has_many :product_group_list_nodes, :order => 'position'
-#  has_many :products, :through => :product_group_list_nodes
-
-#  def each(b)
-#    product_group_list_nodes.each(b)
-#  end
-
-#  def [](*p)
-#    product_group_list_nodes[*p]
-#  end
 
   def <<(obj)
     obj = [obj] if obj.is_a? Product

@@ -43,23 +43,6 @@ describe ProductGroup do
     pg.products.should == prod_list_a
   end
 
-  it "should allow iteration over the product list" do
-    pg = ProductGroup.new(:group => @pg_list_a)
-    pg.each do |p|
-      pg.products.index(p).should == prod_list_a.index(p)
-    end
-  end
-
-  it "should access a specific element of the list" do
-    pg = ProductGroup.new(:group => @pg_list_a)
-    pg[1].should == prod_list_a[1]
-  end
-
-  it "should use mising method when appropriate" do
-    pg = ProductGroup.new(:group => @pg_list_a)
-    pg.length.should == 3
-  end
-
   it "should union two groups together" do
     pg_a = ProductGroup.new(:group => @pg_list_a)
     pg_b = ProductGroup.new(:group => @pg_list_b)
