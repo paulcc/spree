@@ -1,28 +1,21 @@
-class Shipment < ActiveRecord::Base      
-  include ActionView::Helpers::NumberHelper # Needed for JS usable rate information
-  
+class Shipment < ActiveRecord::Base        
   belongs_to :order
   belongs_to :shipping_method
-  has_one :address, :as => :addressable, :dependent => :destroy
+  belongs_to :address
 
   before_create :generate_shipment_number
   after_save :recalculate_tax
   after_save :transition_order
-    
+
+  accepts_nested_attributes_for :address 
+     
   def shipped?
     self.shipped_at
   end
-    
-  def shipping_methods
-    ShippingMethod.all.select { |method| method.zone.include?(address) && method.available?(order) }
-  end 
   
-  def rates
-    quotes = []
-    shipping_methods.each do |method|
-      quotes << {:id => method.id, :name => method.name, :rate => number_to_currency(method.calculate_shipping(self)) }
-    end
-    quotes
+  def shipped=(value)
+    return unless value == "1" && shipped_at.nil?
+    self.shipped_at = Time.now
   end
 
   private  
@@ -36,12 +29,15 @@ class Shipment < ActiveRecord::Base
   end
   
   def transition_order
+    # transition order to shipped if all shipments have been shipped
     return unless shipped_at_changed?
     order.shipments.each do |shipment|
       return unless shipment.shipped?
     end
-    # transition order to shipped if all shipments have been shipped
-    order.ship!
+    current_user_session = UserSession.find   
+    current_user = current_user_session.user if current_user_session    
+    order.ship!                                        
+    order.state_events.create(:name => I18n.t('ship'), :user => current_user, :previous_state => order.state_was)
   end
   
   def recalculate_tax

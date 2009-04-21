@@ -4,6 +4,7 @@ nb-NO:
   abbreviation: Fortkortelse
   access_denied: "Ikke tilgang"
   account: "Konto"
+  account_updated: "Account updated!"        
   action: Aksjon
   actions: 
     cancel: Avbryt
@@ -163,6 +164,7 @@ nb-NO:
   allow_backorders: "Tillat restordre"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Tillat at SSL brukes i utviklings- og testmodus.
   allow_ssl_to_be_used_when_in_production_mode: Tillat at SSL brukes i produksjonsmodus.
+  already_registered: Already Registered?
   amount: Beløp
   are_you_sure: "Er du sikker"
   are_you_sure_category: "Er du sikker på at du vil slette denne kategorien?"
@@ -195,6 +197,7 @@ nb-NO:
   city: Sted
   comp_order: "Kanseller ordre"
   comp_order_confirmation: "Kunden vil ikke bli belastet. Er du sikker på at du vil kansellere ordren?"
+  complete_list: "Complete List"
   configuration: Konfigurasjon
   configuration_options: "Konfigurasjonsvalg"
   configurations: Konfigurasjoner
@@ -207,6 +210,7 @@ nb-NO:
   country_based: "Land"
   create: Opprett
   create_a_new_account: "Opprett ny konto"
+  create_user_account: Create User Account
   created_successfully: "Vellykket opprettelse"
   credit_card: "Kredittkort"
   credit_card_capture_complete: "Kortopplysninger har blitt lagret"
@@ -227,6 +231,8 @@ nb-NO:
   editing_product: "Endre produkt"
   editing_property: "Endre egenskap"
   editing_prototype: "Endre prototype"
+  editing_shipping_category: Endre fraktkategori
+  editing_shipping_method: "Endre leveransemåte"
   editing_state: "Endre stat"
   editing_tax_category: "Endre momskategori"
   editing_user: "Endre bruker"   
@@ -247,6 +253,7 @@ nb-NO:
   filename: Filnavn
   final_confirmation: "Endelig bekreftelse"
   first_name: "Fornavn"
+  forgot_password: "Forgot Password"
   gateway: "Tjeneste"
   gateway_error: "Feil oppstått i tjeneste"
   gateway_setting_description: "Velg en betalingstjeneste og konfigurer den."
@@ -259,9 +266,11 @@ nb-NO:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Ny Google Analytics-konto"
   google_analytics_setting_description: "Manage Google Analytics ID" 
+  guest_user_account: Checkout as a Guest
   height: Høyde
   hello_user: "Hallo, bruker"
   history: History
+  home: "Home"
   image: Bilde
   images: Bilder
   in_progress: "Pågår"
@@ -284,15 +293,20 @@ nb-NO:
   locale_changed: "Endret språk"
   log_in: "Logg inn"
   logged_in_as: "Innlogget som"
-  logged_in_successfully: "Vellykket innlogging."
-  login_authentication_failed: "Feil brukernavn eller passord."
+  logged_in_succesfully: "Logged in successfully"
+  logged_out: "You have been logged out." 
+  login_failed: "Login authentication failed."      
   login_name: Brukernavn
   logout: "Logg ut"
   mail_delivery_enabled: "Sending av epost er skrudd på"
   mail_delivery_not_enabled: "Sending av epost er ikke skrudd på"
   mail_server_preferences: "Preferanser for epostserver"
   mail_server_settings: "Innstillinger for epostserver"
+  mark_shipped: "Merk som levert"
   master_price: "Ordinær pris"
+  meta_description: "Meta Description"
+  meta_keywords: "Meta Keywords"
+  metadata: "Metadata"
   month: "Month"
   my_account: "Min konto"
   my_orders: "Mine ordrer"    
@@ -308,6 +322,8 @@ nb-NO:
   new_property: "Ny egenskap"
   new_prototype: "Ny prototype"
   new_shipment: "Ny leveranse"
+  new_shipping_category: "Ny fraktkategori"
+  new_shipping_method: "Ny leveransemåte"
   new_state: "Ny stat"
   new_tax_category: "Ny momskategori"
   new_tax_rate: "Nytt momsnivå"
@@ -318,6 +334,7 @@ nb-NO:
   next: Neste
   no_items_in_cart: "Ingen artikler i handlekurven"
   no_match_found: "Ingen treff"
+  no_user_found: "No user was found with that email address"
   none: Ingen
   none_available: "Ingen tilgjengelig"
   on_hand: "Tilgjengelig"
@@ -344,6 +361,10 @@ nb-NO:
   paid: Betalt
   parent_category: "Overkategori"
   password: Passord
+  password_reset_instructions: "Password Reset Instructions"
+  password_reset_instructions_are_mailed: "Instructions to reset your password have been emailed to you. Please check your email."
+  password_reset_token_not_found: "We're sorry, but we could not locate your account. If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process."    
+  password_updated: "Password successfully updated"  
   path: Sti
   pay: betal
   payment: Betaling
@@ -358,6 +379,7 @@ nb-NO:
   problem_authorizing_card: "Problem ved autorisering av kort"
   problem_capturing_card: "Problem ved lagring av kortopplysninger"
   problems_processing_order: "Problemer ved prosessering av ordre"
+  proceed_as_guest: "No Thanks, Proceed as Guest"
   process: Prosess
   product: Produkt
   product_details: "Produktdetaljer"
@@ -365,13 +387,18 @@ nb-NO:
   products: Produkter
   properties: Egenskaper
   property: Egenskap
+  prototype: Prototype
   prototypes: Prototyper
   qty: Antall
   rate: "Nivå"
+  register: Register as a New User
+  register_or_guest: Checkout as Guest or Register
+  registration: Registration           
   remember_me: "Husk meg"
   remove: Fjern
   reports: Rapporter
   resend: "Send på nytt"
+  reset_password: "Reset my password"
   response_code: "Responskode"  
   resume: "fortsett"
   resumed: Fortsatt
@@ -387,6 +414,7 @@ nb-NO:
   secure_connection_type: "Kryptert forbindelse"
   select: Velg
   select_from_prototype: "Velg fra prototype"
+  select_preferred_shipping_option: "Velg ønsket leveransemåte"
   send_copy_of_all_mails_to: "Send kopi av all epost til"
   send_copy_of_orders_mails_to: "Send kopi av alle ordre-eposter til"
   send_mails_as: "Send epost som"
@@ -394,18 +422,28 @@ nb-NO:
   ship: send
   ship_address: "Leveringsadresse"
   shipment: Leveranse
+  shipment_number: "Leveransenummer"
   shipped: Sendt
   shipping: Frakt
   shipping_address: "Leveringsadresse"
+  shipping_calculator: Kalkulator
+  shipping_categories: "Fraktkategorier"
+  shipping_categories_description: "Konfigurer fraktkategorier for å styre hvilke produkter som kan bruke de ulike leveransemåtene."
+  shipping_cost: Kostnad
   shipping_error: "Feil i forbindelse med leveranse"
-  shipping_method: "Leveransemåte"
+  shipping_method: Leveransemåte
+  shipping_methods: "Leveransemåter"
+  shipping_methods_description: "Konfigurer leveransemåter."
   shipping_total: "Fraktkostnader"
+  shop_by_taxonomy: "Shop by {{taxonomy}}"
   shopping_cart: "Handlekurv"
   show_deleted: "Vis slettede"
   show_incomplete_orders: "Vis ufullstendige ordrer"
   show_only_complete_orders: "Vis bare ferdige ordrer"
   show_out_of_stock_products: "Vis produkter som ikke er på lager"
   sign_up: "Meld meg på"
+  site_name: "Site Name"
+  site_url: "Site URL"
   sku: Varenummer
   smtp: SMTP
   smtp_authentication_type: "SMTP autentisering"
@@ -444,6 +482,7 @@ nb-NO:
   this_file_language: "Norsk"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   total: Total
+  tracking: Sporing
   transaction: Transaksjon
   tree: Tre
   try_again: "Forsøk på nytt"
@@ -452,6 +491,7 @@ nb-NO:
   unable_to_capture_credit_card: "Kunne ikke lagre kortopplysningene"
   unable_to_save_order: "Kunne ikke lagre ordren"
   update: Oppdater
+  update_password: "Update my password and log me in"                    
   updated_successfully: "Oppdatert"  
   use_as_shipping_address: "Bruk som leveringsadresse"
   use_billing_address: "Bruk fakturaadressen"
