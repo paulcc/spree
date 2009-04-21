@@ -101,8 +101,8 @@ module Spree
     # a billing address when authorizing/voiding a previously captured transaction.  So omits these 
     # options in this case since they aren't necessary.  
     def minimal_gateway_options
-      {:email => order.user.email, 
-       :customer => order.user.email, 
+      {:email => order.email, 
+       :customer => order.email, 
        :ip => order.ip_address, 
        :order_id => order.number, 	## OUT  + "_" + rand(1000).to_s, #pcc hack
        :shipping => order.ship_amount * 100,

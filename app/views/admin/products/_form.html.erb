@@ -44,7 +44,7 @@
     <% end %>
 
     <p>
-      <%= f.label :shipping_category_id, t("ext_shipping_shipping_categories")%><br />    
+      <%= f.label :shipping_category_id, t("shipping_categories")%><br />    
       <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, {:include_blank => true}, {"style" => "width:200px"}) %>        
       <%= f.error_message_on :shipping_category %>
     </p>
@@ -58,7 +58,17 @@
   </div>
 </div>
 
-<%= render 'properties_form', :f => f %>
+<h2><%= t("metadata") %></h2>
+<p>
+  <%= f.label :meta_keywords, t("meta_keywords")%><br />
+  <%= f.text_field :meta_keywords, :class => 'fullwidth' %>        
+</p>
+<p>
+  <%= f.label :meta_description, t("meta_description")%><br />
+  <%= f.text_field :meta_description, :class => 'fullwidth' %>        
+</p>
+
+<%#= render 'properties_form', :f => f %>
 
 <% Variant.additional_fields.select{|f| f[:only].nil? || f[:only].include?(:product) }.each do |field| %>
   <%= render :partial => "admin/shared/additional_field", :locals => {:field => field, :f => f} %>

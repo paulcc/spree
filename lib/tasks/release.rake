@@ -35,7 +35,6 @@ namespace 'spree' do
     s.add_dependency 'rails', '= 2.3.2'
     ### tmp ### s.add_dependency 'activemerchant', '= 1.4.1.1'
     s.add_dependency 'activerecord-tableless', '= 0.1.0' 
-    s.add_dependency 'has_many_polymorphs', '= 2.13'     
     s.add_dependency 'calendar_date_select', '= 1.15' 
     s.add_dependency 'tlsmail', '= 0.0.1'
     s.has_rdoc = true
@@ -63,7 +62,6 @@ namespace 'spree' do
     #files.include 'log/.keep'
     files.exclude /^pkg/
     files.include 'public/.htaccess.example'
-    files.include 'vendor/gems/active_presenter-0.0.6/.specification'
     files.exclude 'public/images/products'
     files.exclude 'tmp/'
     s.files = files.to_a

@@ -70,8 +70,6 @@ class InstanceGenerator < Rails::Generator::Base
       files = base_dirs + text_files + environments + scripts + public_files + frozen_gems
       files.map! { |f| f = $1 if f =~ %r{^#{root}/(.+)$}; f }
       
-      # hack to add specification (we're ignoring other hidden files)
-      files << "vendor/gems/active_presenter-0.0.6/.specification"
       files.sort!
       
       files.each do |file|
@@ -107,7 +105,7 @@ class InstanceGenerator < Rails::Generator::Base
       m.template "../../../../config/environment.rb", "config/environment.rb", :assigns => { :app_name => @app_name, :app_secret_key_to_be_replaced_in_real_app_by_generator => secret }
       m.file "../../../../config/boot.rb", "config/boot.rb"
       m.template "session_store.rb", "config/initializers/session_store.rb", :assigns => { :app_name => @app_name, :app_secret_key_to_be_replaced_in_real_app_by_generator => secret }
-      %w{backtrace_silencers inflections locales mime_types new_rails_defaults searchlogic spree}.each do |initializer|
+      %w{backtrace_silencers inflections locales mime_types new_rails_defaults searchlogic spree compass}.each do |initializer|
         m.file "../../../../config/initializers/#{initializer}.rb", "config/initializers/#{initializer}.rb" 
       end
       m.file "../../../../config/spree_permissions.yml", "config/spree_permissions.yml"

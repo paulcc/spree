@@ -165,6 +165,7 @@ fr-FR:
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Permettre l'utilisation du SSL lors des modes développement et test
   allow_ssl_to_be_used_when_in_production_mode: Permettre l'utilisation du SSL lors du mode production
   alternative_phone: Alternative Phone
+  already_registered: Already Registered?
   amount: Montant
   are_you_sure: "Êtes-vous sûr ?"
   are_you_sure_category: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
@@ -198,6 +199,7 @@ fr-FR:
   city: Ville
   comp_order: "Commande complète"
   comp_order_confirmation: "Le client n'a pas été débité.  Êtes-vous sûr de vouloir valider cette commande ?"
+  complete_list: "Complete List"
   configuration: Configuration
   configuration_options: "Option configuration"
   configurations: Configurations
@@ -210,6 +212,7 @@ fr-FR:
   country_based: "Country Based"
   create: Créer
   create_a_new_account: "Créer un nouveau compte"
+  create_user_account: Create User Account
   created_successfully: "Crée avec succès"
   credit_card: "Carte de crédit"
   credit_card_capture_complete: "La carte de crédit a été acceptée"
@@ -230,6 +233,8 @@ fr-FR:
   editing_product: "Edition du produit"
   editing_property: "Edition de la propriété"
   editing_prototype: "Edition du prototype"
+  editing_shipping_category: "Editing Shipping Category"
+  editing_shipping_method: "Editing Shipping Method"
   editing_state: "Edition de la région"
   editing_tax_category: "Edition de la catégorie de taxe"
   editing_user: "Edition d'un utilisateur"
@@ -277,9 +282,11 @@ fr-FR:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Nouveau compte Google Analytics"
   google_analytics_setting_description: "Gestion de l'ID Google Analytics"
+  guest_user_account: Checkout as a Guest
   height: Taille
   hello_user: "Bonjour utilisateur"
   history: History
+  home: "Home"
   image: Image
   images: Images
   in_progress: "En progression"
@@ -311,7 +318,11 @@ fr-FR:
   mail_delivery_not_enabled: "Distribution des emails est désactivée"
   mail_server_preferences: Préférence du serveur de messagerie
   mail_server_settings: "Paramètres du serveur de messagerie"
+  mark_shipped: "Mark Shipped"
   master_price: "Prix de départ"
+  meta_description: "Meta Description"
+  meta_keywords: "Meta Keywords"
+  metadata: "Metadata"
   month: "Month"
   my_account: "Mon compte"
   my_orders: "Mes commandes"
@@ -327,6 +338,8 @@ fr-FR:
   new_property: "Nouvelle proprieté"
   new_prototype: "Nouveau prototype"
   new_shipment: "Nouvelle expédition"
+  new_shipping_category: "New Shipping Category"
+  new_shipping_method: "New Shipping Method"
   new_state: "Nouvelle région"
   new_tax_category: "Nouvelle catégorie de taxes"
   new_tax_rate: "Nouvelle taxe"
@@ -382,6 +395,7 @@ fr-FR:
   problem_authorizing_card: "Probleme d'autorization de votre carte de crédit"
   problem_capturing_card: "Impossible d'utiliser votre carte de crédit"
   problems_processing_order: "Impossible de traiter votre commande"
+  proceed_as_guest: "No Thanks, Proceed as Guest"
   process: Process
   product: Produit
   product_details: "Détails du produit"
@@ -393,6 +407,9 @@ fr-FR:
   prototypes: Prototypes
   qty: Qté
   rate: Taux
+  register: Register as a New User
+  register_or_guest: Checkout as Guest or Register
+  registration: Registration           
   remember_me: "Se souvenir de moi"
   remove: Supprimer
   reports: Statistiques
@@ -421,13 +438,21 @@ fr-FR:
   ship: livraison
   ship_address: "Adresse de livraison"
   shipment: Livraison
+  shipment_number: "Shipment #"
   shipped: Livré
   shipping: Frais de livraison
   shipping_address: "Adresse de livraison"
+  shipping_calculator: Calculator
+  shipping_categories: "Shipping Categories"
+  shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  shipping_cost: Cost
   shipping_error: "Erreur de livraison"
   shipping_instructions: "Shipping Instructions"
   shipping_method: "Méthode de livraison"
+  shipping_methods: "Shipping Methods"
+  shipping_methods_description: "Manage shipping methods"
   shipping_total: "Total de la livraison"
+  shop_by_taxonomy: "Shop by {{taxonomy}}"
   shopping_cart: "Panier"
   show_deleted: "Afficher les commandes supprimées"
   show_incomplete_orders: "Afficher les commandes imcomplètes"
@@ -474,6 +499,7 @@ fr-FR:
   this_file_language: "Français (FR)"
   to_add_variants_you_must_first_define: "To add variants, you must first define"
   total: Total
+  tracking: Tracking
   transaction: Transaction
   tree: Arborescence
   try_again: "Reessayer"

@@ -164,7 +164,7 @@ pt-BR:
   allow_backorders: "Permitir Devoluções"
   allow_ssl_to_be_used_when_in_developement_and_test_modes: Permitir uso de SSL quando no modo de desenvolvimento e teste
   allow_ssl_to_be_used_when_in_production_mode: Permitir uso de SSL quando em modo de produção
-  alternative_phone: Alternative Phone
+  already_registered: Already Registered?
   amount: Valor
   are_you_sure: "Tem certeza?"
   are_you_sure_category: "Tem certeza que quer apagar esta categoria?"
@@ -194,10 +194,10 @@ pt-BR:
   change_language: "Mudar Língua"
   charged: Cobrado
   checkout: Finalizar
-  checkout_had_errors: The checkout details contained one or more errors
   city: Cidade
   comp_order: "Computar Pedido"
   comp_order_confirmation: "O cliente não será cobrado. Tem certeza que quer computar este pedido?"
+  complete_list: "Complete List"
   configuration: Configuração
   configuration_options: "Opções de Configuração"
   configurations: Configurações
@@ -210,6 +210,7 @@ pt-BR:
   country_based: "Baseado em País"
   create: Criar
   create_a_new_account: "Crie uma nova conta"
+  create_user_account: Create User Account
   created_successfully: "Criado com sucesso"
   credit_card: "Cartão de Crédito"
   credit_card_capture_complete: "Cartão de Crédito foi Capturado"
@@ -230,6 +231,8 @@ pt-BR:
   editing_product: "Editando Produto"
   editing_property: "Editando Propriedade"
   editing_prototype: "Editando Protótipo"
+  editing_shipping_category: "Editing Shipping Category"
+  editing_shipping_method: "Editing Shipping Method"
   editing_state: "Editando Estado"
   editing_tax_category: "Editando Categoria de Taxa"
   editing_user: "Editando Usuário"
@@ -245,20 +248,6 @@ pt-BR:
   expiration: "Expiração"
   expiration_month: "Mês de Expiração"
   expiration_year: "Ano de Expiração"
-  ext_shipping_calculator: Calculator
-  ext_shipping_cost: Cost
-  ext_shipping_editing_shipping_category: "Editing Shipping Category"
-  ext_shipping_editing_shipping_method: "Editing Shipping Method"
-  ext_shipping_mark_shipped: "Mark Shipped"
-  ext_shipping_method: Method
-  ext_shipping_new_shipping_category: "New Shipping Category"
-  ext_shipping_new_shipping_method: "New Shipping Method"
-  ext_shipping_shipment_number: "Shipment #"
-  ext_shipping_shipping_categories: "Shipping Categories"
-  ext_shipping_shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
-  ext_shipping_shipping_methods: "Shipping Methods"
-  ext_shipping_shipping_methods_description: "Manage shipping methods"
-  ext_shipping_tracking: Tracking
   extension: Extensão
   extensions: Extensões
   filename: "Nome do arquivo"
@@ -277,9 +266,11 @@ pt-BR:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "Nova Conta Google Analytics"
   google_analytics_setting_description: "Gerencie ID do Google Analytics" 
+  guest_user_account: Checkout as a Guest
   height: Largura
   hello_user: "Olá Usuário"
   history: História
+  home: "Home"
   image: Imagem
   images: Imagens
   in_progress: "Em progresso"
@@ -311,7 +302,11 @@ pt-BR:
   mail_delivery_not_enabled: "Envio de Email não está habilitado"
   mail_server_preferences: Preferências de Servidor de Email
   mail_server_settings: "Configuração do Servidor de Email"
+  mark_shipped: "Mark Shipped"
   master_price: "Preço Principal"
+  meta_description: "Meta Description"
+  meta_keywords: "Meta Keywords"
+  metadata: "Metadata"
   month: "Mês"
   my_account: "Minha Conta"
   my_orders: "Meus Pedidos"
@@ -327,6 +322,8 @@ pt-BR:
   new_property: "Nova Propriedade"
   new_prototype: "Novo Protótipo"
   new_shipment: "Novo Envio"
+  new_shipping_category: "New Shipping Category"
+  new_shipping_method: "New Shipping Method"
   new_state: "Novo Estado"
   new_tax_category: "Nova Categoria de Imposto"
   new_tax_rate: "Nova Taxa de Imposto"
@@ -382,6 +379,7 @@ pt-BR:
   problem_authorizing_card: "Problema na autorização do cartão"
   problem_capturing_card: "Problema capturando cartão de crédito"
   problems_processing_order: "Tivemos problemas processando este pedido"
+  proceed_as_guest: "No Thanks, Proceed as Guest"
   process: Processar
   product: Produto
   product_details: "Detalhes do Produto"
@@ -393,6 +391,9 @@ pt-BR:
   prototypes: Protótipos
   qty: Qtde.
   rate: Taxa
+  register: Register as a New User
+  register_or_guest: Checkout as Guest or Register
+  registration: Registration           
   remember_me: "Lembre-se de mim"
   remove: Remover
   reports: Relatórios
@@ -421,13 +422,20 @@ pt-BR:
   ship: entregar
   ship_address: "Endereço da Entrega"
   shipment: Entrega
+  shipment_number: "Shipment #"
   shipped: Entrgue
   shipping: Entregando
   shipping_address: "Endereço de Entrega"
+  shipping_calculator: Calculator
+  shipping_categories: "Shipping Categories"
+  shipping_categories_description: "Manage shipping categories to identify which products can be shipped via which method"
+  shipping_cost: Cost
   shipping_error: "Erro de Entrega"
-  shipping_instructions: "Shipping Instructions"
-  shipping_method: "Método de Entrega"
+  shipping_method: Method
+  shipping_methods: "Shipping Methods"
+  shipping_methods_description: "Manage shipping methods"
   shipping_total: "Total de Entrega"
+  shop_by_taxonomy: "Shop by {{taxonomy}}"
   shopping_cart: "Carrinho de Compra"
   show_deleted: "Mostrar Apagados"
   show_incomplete_orders: "Mostrar Pedidos Incompletos"
@@ -474,6 +482,7 @@ pt-BR:
   this_file_language: "Português (Brasil)"
   to_add_variants_you_must_first_define: "Para adicionar variantes, primeiro você deve definir"
   total: Total
+  tracking: Tracking
   transaction: Transação
   tree: Árvore
   try_again: "Tente novamente"

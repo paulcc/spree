@@ -33,7 +33,7 @@ module Spree::BaseHelper
 
   # human readable list of variant options
   def variant_options(v, allow_back_orders = Spree::Config[:allow_backorders], include_style = true)
-    list = v.option_values.map { |ov| "#{ov.option_type.presentation}: #{ov.presentation}" }.to_sentence({:words_connector => ","})
+    list = v.option_values.map { |ov| "#{ov.option_type.presentation}: #{ov.presentation}" }.to_sentence({:words_connector => ", ", :two_words_connector => ", "})
     list = include_style ? "<span class =\"out-of-stock\">(" + t("out_of_stock") + ") #{list}</span>" : "#{t("out_of_stock")} #{list}" unless (v.in_stock or allow_back_orders)
     list
   end  
@@ -61,4 +61,17 @@ module Spree::BaseHelper
       image_tag product.images.first.attachment.url(:product)  
     end
   end
+  
+  def meta_data_tags
+    return unless self.respond_to?(:object) && object
+    "".tap do |tags|
+      if object.respond_to?(:meta_keywords) and object.meta_keywords.present?
+        tags << tag('meta', :name => 'keywords', :content => object.meta_keywords) + "\n"
+      end
+      if object.respond_to?(:meta_description) and object.meta_description.present?
+        tags << tag('meta', :name => 'description', :content => object.meta_description) + "\n"
+      end
+    end
+  end
+  
 end
