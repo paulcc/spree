@@ -17,12 +17,8 @@
   <div class='adr'>
     <h4><%= link_to t("ship_address"), edit_admin_order_shipment_url(@order, @order.shipments.last) %></h4>
     <%= render :partial => 'admin/shared/address', :locals => {:address => @order.ship_address} %>      
-  <% else %>
-    <h4><%= t('ship_address') %></h4>
-    <p><%= t('ship_address') %> <%= t('is_not_set_yet') %></p>
-    <p>
-  <% end %>
-</div>
+  </div>
+<% end %>
 <hr />
 
 <% if @order.user %>
