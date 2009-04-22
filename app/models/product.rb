@@ -13,9 +13,6 @@ class Product < ActiveRecord::Base
 
   # has_and_belongs_to_many :taxons
   # XXX for backwards compatibility
-#  has_many :product_group_list_nodes
-#  has_many :product_group_lists, :through => :product_group_list_nodes
-#  has_many :product_groups, :through => :product_group_lists, :source => :product_group
   has_many :taxons, :finder_sql => 
     'SELECT t.* ' + 
     'FROM taxons t ' +
@@ -113,8 +110,18 @@ class Product < ActiveRecord::Base
     end
   end
   
+  def active?(available_on = Date.today)
+    available_on? && not_deleted?
+  end
   
-  
+  def available?(available_on = Date.today)
+    Date.new(self.available_on) <= Date.new(available_on)
+  end
+
+  def not_deleted?
+    self.deleted_at.nil?
+  end
+
   private
 
     def adjust_inventory

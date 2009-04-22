@@ -6,12 +6,18 @@ class TaxonsController < Spree::BaseController
   
   private
   def load_data
-    @search = object.products.active.new_search(params[:search])
-    @search.per_page ||= Spree::Config[:products_per_page]
-    @search.include = :images
+    # XXX deal with search...some how
+    # PCC: no chg, just disabled
+#    @search = object.products.active.new_search(params[:search])
+#    @search.per_page = Spree::Config[:products_per_page]
+#    @search.include = :images
 
     @product_cols = 3
-    @products ||= @search.all
+#    @products ||= @search.all
+    @products = object.products.find_all {|p| p.active?}
+    @search = Product.new_search(@products)
+    @search.include = :images
+    @search.per_page = Spree::Config[:products_per_page]
   end
   
   def object

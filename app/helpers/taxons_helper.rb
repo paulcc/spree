@@ -14,18 +14,26 @@ module TaxonsHelper
   end
 
   
-  # Retrieves the collection of products to display when "previewing" a taxon.  This is abstracted into a helper so 
-  # that we can use configurations as well as make it easier for end users to override this determination.  One idea is
-  # to show the most popular products for a particular taxon (that is an exercise left to the developer.) 
+  # Retrieves the collection of products to display when "previewing" a taxon. 
+  # This is abstracted into a helper so that we can use configurations as well 
+  # as make it easier for end users to override this determination.  One idea is
+  # to show the most popular products for a particular taxon (that is an exercise
+  # left to the developer.) 
   def taxon_preview(taxon)
-    products = taxon.products.active[0..4]
-    return products unless products.size < 5
-    if Spree::Config[:show_descendents]
-      taxon.descendents.each do |taxon|
-        products += taxon.products.active[0..4]
-        break if products.size >= 5
-      end
-    end
-    products[0..4]
+#    products = taxon.products.active[0..4]
+#    return products unless products.size < 5
+#    if Spree::Config[:show_descendents]
+#      taxon.descendents.each do |taxon|
+#        products += taxon.products.active[0..4]
+#        break if products.size >= 5
+#      end
+#    end
+#    products[0..4]
+
+# XXX non-leaf node taxons are no longer capable of hosting
+# products of their own accord.  Their product sets consist
+# solely of the union of their leaf-node decendent taxons.
+# So, about the only thing similar that you can do is this:
+    taxon.products.find_all {|p| p.active?}[0..4]
   end
 end
