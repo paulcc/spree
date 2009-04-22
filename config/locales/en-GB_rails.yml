@@ -92,8 +92,8 @@ en-GB:
     errors:
       template:
         header:
-          one:    "1 error prohibited this {{model}} from being saved"
-          other:  "{{count}} errors prohibited this {{model}} from being saved"
+          one:    "There is 1 error in this {{model}} and it cannot be saved"
+          other:  "There are {{count}} errors in this {{model}} and it cannot be saved"
         # The variable :count is also available
         body: "There were problems with the following fields:"
     

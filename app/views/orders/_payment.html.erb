@@ -6,7 +6,9 @@
   	</p>
   	<p>
   		<label for=""><%= t("card_number") %></label>
-  		<%= creditcard_form.text_field :number, :size=> 19, :class => 'required' -%><span class="req">*</span>
+                <%= creditcard_form.text_field :number, :size=> 19, :class => 'required' -%>
+                <span class="req">*</span>
+                &nbsp; <span id="card_type"></span>
   	</p>
   	<p>
   		<label for=""><%= t("expiration") %></label>  		

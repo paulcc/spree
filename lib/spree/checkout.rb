@@ -8,6 +8,8 @@ module Spree::Checkout
     load_data
     load_checkout_steps                                             
     
+    @order.update_attributes(params[:order])
+
     # additional default values needed for checkout
     @order.bill_address ||= Address.new(:country => @default_country)
     @order.ship_address ||= Address.new(:country => @default_country)

@@ -248,7 +248,7 @@ en-GB:
   error: error
   event: Event
   existing_customer: "Existing Customer"
-  expiration: "Expiration"
+  expiration: "Expires end"
   expiration_month: "Expiration Month"
   expiration_year: "Expiration Year"
   ext_shipping_calculator: Calculator
