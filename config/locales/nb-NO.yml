@@ -518,3 +518,4 @@ nb-NO:
   zone_based: "Soner"
   zone_setting_description: "Liste over land, stater og andre soner som brukes i diverse beregninger."
   zones: Soner  
+  select_preferred_shipping_option: "Velg ønsket leveransemåte"

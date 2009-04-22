@@ -180,7 +180,7 @@ var shift_to_region = function(active) {
 };
 
 var submit_billing = function() {
-  build_address('Billing Address', 'b');
+  build_address('b');
   return true;
 };
 
@@ -225,7 +225,7 @@ var submit_shipping = function() {
       return false;
     }
   });  
-  build_address('Shipping Address', 's');
+  build_address('s');
   return true;
 };
                      

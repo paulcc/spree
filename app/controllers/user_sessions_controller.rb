@@ -28,8 +28,13 @@ class UserSessionsController < Spree::BaseController
 
   def destroy
     current_user_session.destroy
+<<<<<<< HEAD:app/controllers/user_sessions_controller.rb
     reset_session                                      # useful for clearing things
     flash[:notice] = t("you_have_been_logged_out")
+=======
+    reset_session
+    flash[:notice] = t("logged_out")
+>>>>>>> master:app/controllers/user_sessions_controller.rb
     redirect_to products_path
   end
 end
