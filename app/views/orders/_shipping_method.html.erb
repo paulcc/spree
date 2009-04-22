@@ -4,7 +4,7 @@
         <% if Spree::Config[:shipping_instructions] %>
           <p id="minstrs">
             <label for=""><%= t("shipping_instructions") %></label>
-            <%= f.text_field :shipping_instructions -%>
+            <%= order_form.text_field :special_instructions -%>
           </p>
         <% end %>
 	<p><input id="select_shipping_method" type="button" value="<%=t("continue")%>"/></p>
