@@ -21,11 +21,13 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   create.response do |wants| 
+    `/etc/cron.daily/xapian`	# hack to update search indices after product chg
     # go to edit form after creating as new product
     wants.html {redirect_to edit_admin_product_url(Product.find(@product.id)) }
   end
 
   update.response do |wants| 
+    `/etc/cron.daily/xapian`	# hack to update search indices after product chg
     # override the default redirect behavior of r_c
     # need to reload Product in case name / permalink has changed
     wants.html {redirect_to edit_admin_product_url(Product.find(@product.id)) }
