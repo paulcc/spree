@@ -45,6 +45,7 @@ ActionController::Routing::Routes.draw do |map|
     order.resources :shipments, :member => {:shipping_method => :get}
   end
   #map.resources :shipments, :member => {:shipping_method => :any}
+  map.resources :orders, :member => {:secure_form => :get, :callback_3dsecure => :any, :complete_3dsecure => :any}
 
   # route globbing for pretty nested taxon and product paths
   map.taxons_with_product '/t/*taxon_path/p/:id', :controller => 'products', :action => 'show'

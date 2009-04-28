@@ -12,7 +12,7 @@ You have chosen to use a card that is part of the 3D-Secure scheme, so you will 
   <img src="/images/mcsc_logo.gif" alt="MasterCard SecureCode">
   <br/>
 
-  <iframe src="/orders/<%= @order.number %>/checkout/secure_form" width="450" height="450" frameborder="0" scrolling="no" >
+  <iframe src="/orders/<%= @order.number %>/secure_form" width="450" height="450" frameborder="0" scrolling="no" >
     <div align="center">
       <% session["3Dform"] %>
     </div>
