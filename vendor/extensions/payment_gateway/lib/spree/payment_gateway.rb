@@ -1,9 +1,9 @@
 module Spree
   module PaymentGateway    
-    def authorize(amount)
+    def authorize(amount, options = {})
       gateway = payment_gateway       
       # ActiveMerchant is configured to use cents so we need to multiply order total by 100
-      response = gateway.authorize((amount * 100).to_i, self, gateway_options)      
+      response = gateway.authorize((amount * 100).to_i, self, gateway_options(options))
 
        # 3ds code derived from http://github.com/andyjeffries/active_merchant/commit/d25199d218e06cb20d61268d39cdb050fe54bd85
 
@@ -46,10 +46,10 @@ module Spree
     end
 
     # TODO - revise for 3dsecure
-    def purchase(amount)
+    def purchase(amount, options = {})
       #combined Authorize and Capture that gets processed by the ActiveMerchant gateway as one single transaction.
       gateway = payment_gateway 
-      response = gateway.purchase((amount * 100).to_i, self, gateway_options) 
+      response = gateway.purchase((amount * 100).to_i, self, gateway_options(options)) 
       gateway_error(response) unless response.success?
       
       
@@ -75,10 +75,11 @@ module Spree
       raise Spree::GatewayError.new(msg)
     end
         
-    def gateway_options
-      options = {:billing_address => generate_address_hash(address), 
-                 :shipping_address => generate_address_hash(order.ship_address)}
-      options.merge minimal_gateway_options
+    def gateway_options(options = {})
+      addresses = {:billing_address  => generate_address_hash(address), 
+                   :shipping_address => generate_address_hash(order.ship_address)}
+      addresses.merge minimal_gateway_options
+      addresses.merge options
     end    
     
     # Generates an ActiveMerchant compatible address hash from one of Spree's address objects
