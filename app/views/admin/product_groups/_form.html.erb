@@ -1,0 +1,27 @@
+<% f.field_container :name do %>
+  <%= f.label :name, t("name") %> <span class="required">*</span><br />
+  <%= f.text_field :name %>
+  <%= f.error_message_on :name %>
+<% end %>
+
+<!-- This field is immutable after it is created, so we only allow editing for new
+     records.  Its just for information purposes otherwise -->
+<% if @product_group.new_record? %>
+  <% f.field_container :name do %>
+    <%= f.label :group_type, t("group_type") %> <span class="required">*</span><br />
+    
+    <ul class="undecorated">
+    <% ProductGroup.types.each do |type| %>
+      <li>
+      <label>
+      <%= radio_button_tag "product_group[group_type]", "#{type}" %> <%= "#{type} -- #{type.description}" %>
+      </label>
+    <% end %>
+    
+    </ul>
+    <%= f.error_message_on :group_type %>
+  <% end %>
+<% else %>
+  <%= f.label(:group_type, t("group_type")) %>
+  <%= "#{@product_group.group_type} -- #{@product_group.group.class.description}" %>
+<% end %>

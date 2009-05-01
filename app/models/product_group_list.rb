@@ -4,6 +4,7 @@ class ProductGroupList < ActiveRecord::Base
 
   ProductGroup::register_method(ProductGroupList, :remove)
   ProductGroup::register_method(ProductGroupList, :<<)
+  ProductGroup::register_class(ProductGroupList)
 
   def remove(product)
     node = product_group_list_nodes.detect { |n| n.product == product }
@@ -30,6 +31,10 @@ class ProductGroupList < ActiveRecord::Base
 
   def products
     product_group_list_nodes.collect {|n| n.product}
+  end
+
+  def self.description
+    "Create explicit list of products"
   end
 
 end

@@ -1,0 +1,44 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<div class='toolbar'>
+  <ul class='actions'>
+    <li id="new_pg_link">
+      <%= button_link_to_remote t("new_product_group"), {
+                         :url => new_admin_product_group_url, 
+                         :method => :get,
+                         :update => "product_groups",
+                         :before => "Element.hide('new_pg_link');Element.show('busy_indicator')", 
+                         :complete => "Element.hide('busy_indicator')"}, :icon => 'add' %>
+    </li>
+  </ul>
+  <br class='clear' />
+</div>
+
+<h1><%=t("product_groups") %></h1>
+
+<%= image_tag "spinner.gif", :plugin=>"spree", :style => "display:none", :id => 'busy_indicator' %>
+<div id="product_groups"></div>
+
+<table class="index">
+	<thead>
+		<tr>
+			<th><%= t("name") %></th>
+			<th><%= t("type") %></th>
+			<th><%= t("action") %></th>
+		</tr>
+	</thead>
+	<tbody>
+    <% @product_groups.each do |product_group| %>
+      <tr>
+        <td><%= product_group.name %></td>
+        <td><%= product_group.group_type %></td>
+		    <td class="actions">
+		      <%= link_to_edit(product_group) %>
+		      &nbsp;
+		      <%= link_to_delete(product_group) %>
+		    </td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

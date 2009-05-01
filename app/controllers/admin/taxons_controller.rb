@@ -91,11 +91,4 @@ class Admin::TaxonsController < Admin::BaseController
     render :layout => false
   end
   
-  private 
-  def reposition_taxons(taxons)
-    taxons.each_with_index do |taxon, i|
-        taxon.position = i
-        taxon.save!
-    end
-  end
 end

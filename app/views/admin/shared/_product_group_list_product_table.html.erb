@@ -1,0 +1,21 @@
+<table class="index">
+  <tr>
+    <th><%= t("sku") %></td>
+    <th><% #= order_by_link :name, :text => t("name") %></td>
+    <th>&nbsp;</th>
+  </tr>
+<% product_group.products.each do |product| %>
+  <tr id="<%= dom_id(product, :sel) %>">
+    <td><%= product.sku %></td>
+    <td><%= product.name %></td>
+    <td class="actions">
+      <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product, :rem_spinner)}" %>		                         
+      <%= link_to_remote icon('delete') + ' ' + t('remove'), 
+	  {:url => remove_admin_product_product_group_url(product, product_group),
+      :loading => "Element.show(#{dom_id(product, :rem_spinner)})",
+      :update => 'selected-products',
+      :complete => "$('#{dom_id(product, :sel)}').remove(); Element.hide(#{dom_id(product, :rem_spinner)});"}, :class => 'iconlink' %>
+    </td>
+  </tr>
+<% end %>
+</table>

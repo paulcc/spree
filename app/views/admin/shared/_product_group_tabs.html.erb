@@ -1,0 +1,15 @@
+<% content_for :sidebar do %>
+  <h3 class="name"><%= @product_group.group_type %></h3>
+  <br class="clear" />
+
+  <ul class="sidebar">
+    <li<%= ' class="active"' if current == 'product_group_details' %>>
+      <%= link_to t("product_group_details"), edit_admin_product_group_url(@product_group) %> 
+    </li>
+<% if @product_group.group.class == ProductGroupList %>
+    <li<%= ' class="active"' if current == 'products' %>>
+      <%= link_to t("products"), selected_admin_product_group_products_url(@product_group) %>
+    </li>
+<% end %>         
+  </ul>
+<% end %>

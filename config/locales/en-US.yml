@@ -243,6 +243,7 @@ en-US:
   editing_option_type: "Editing Option Type"
   editing_option_types: "Editing Option Types"
   editing_product: "Editing Product"
+  editing_product_group: "Editing Product Group"
   editing_property: "Editing Property"
   editing_prototype: "Editing Prototype"
   editing_shipping_category: "Editing Shipping Category"
@@ -283,6 +284,7 @@ en-US:
   google_analytics_id: "Analytics ID"
   google_analytics_new: "New Google Analytics Account"
   google_analytics_setting_description: "Manage Google Analytics ID" 
+  group_type: "Group Type"
   guest_user_account: Checkout as a Guest
   height: Height
   hello_user: "Hello User"
@@ -341,6 +343,7 @@ en-US:
   new_option_type: "New Option Type"
   new_option_value: "New Option Value"
   new_product: "New Product"
+  new_product_group: "New Product Group"
   new_property: "New Property"
   new_prototype: "New Prototype"
   new_shipment: "New Shipment"
@@ -410,7 +413,9 @@ en-US:
   process: Process
   product: Product
   product_details: "Product Details"
-  product_has_no_description: Product has not description
+  product_has_no_description: Product has no description
+  product_group_details: "Product Group Details"
+  product_groups: "Product Groups"
   product_properties: "Product Properties"
   products: Products
   products_with_zero_inventory_display: "Products with a zero inventory will {{not}} be displayed"
