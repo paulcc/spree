@@ -11,7 +11,7 @@
   <% if @product.variants? %>
   <div id="product-variants">
     <h2><%= t('variants') %></h2>
-    <p>Quantity: <%= text_field_tag :quantity, 1 %></p>
+    <p>Quantity: <%= text_field_tag :quantity, 1, :size => 3 %></p>
     <ul>
       <%  has_checked = false
           @product.variants.active.each_with_index do |v,index|
