@@ -6,13 +6,8 @@
   	</p>
   	<p>
   		<label for=""><%= t("card_number") %></label>
-<<<<<<< HEAD:app/views/orders/_payment.html.erb
-                <%= creditcard_form.text_field :number, :size=> 19, :class => 'required' -%>
-                <span class="req">*</span>
-                &nbsp; <span id="card_type"></span>
-=======
   		<%= creditcard_form.text_field :number, :size=> 19, :max_length => 19, :class => 'required' -%><span class="req">*</span>
->>>>>>> f446c96a6c5958ad4b832f176925eed0fbd09674:app/views/orders/_payment.html.erb
+                &nbsp; <span id="card_type"></span>
   	</p>
   	<p>
   		<label for=""><%= t("expiration") %></label>  		

@@ -39,18 +39,12 @@
   		<%= bill_form.text_field :zipcode, :class => 'required' -%><span class="req">*</span>
   	</p>    
   	<p id="bcountry">
-<<<<<<< HEAD:app/views/orders/_billing.html.erb
-  		<label for=""><%= t("country") %></label>
-  		<span id="bcountry"><%= bill_form.collection_select :country_id, @countries, :id, :name, {}, {:class => 'required'} %></span>
-=======
   		<label for="<%= t("country") %>"><%= t("country") %></label>
-  		<span id="bcountry"><%= bill_form.collection_select :country_id, @countries, :id, :name, {}, {:style => 'width:150px;', :class => 'required'} %></span>
->>>>>>> f446c96a6c5958ad4b832f176925eed0fbd09674:app/views/orders/_billing.html.erb
+  		<span id="bcountry"><%= bill_form.collection_select :country_id, @countries, :id, :name, {}, {:class => 'required'} %></span>
   	</p>
   	<p id="bphone">
   		<label for="<%= t("phone") %>"><%= t("phone") %></label>
   		<%= bill_form.text_field :phone, :class => 'required' -%><span class="req">*</span>
-<<<<<<< HEAD:app/views/orders/_billing.html.erb
         </p>
         <% if Spree::Config[:alternative_billing_phone] %>
           <p id="baltphone">
@@ -58,12 +52,8 @@
             <%= bill_form.text_field :alternative_phone -%>
           </p>
         <% end %>
-  	<p><input id="continue_billing" type="button" value="<%=t("continue")%>"/></p>
-=======
-  	</p>
   	<div class="form-buttons">
       <input id="continue_billing" type="button" class="button primary" value="<%=t("continue")%>"/>
     </div>
->>>>>>> f446c96a6c5958ad4b832f176925eed0fbd09674:app/views/orders/_billing.html.erb
   </div>
 <% end %>
