@@ -37,10 +37,11 @@ $(function() {
 
 jQuery.fn.sameAddress = function() {
   this.click(function() {
-    if(!$(this).attr('checked')) {
-      //Clear ship values?
+    if($(this).attr('class') == 'is_checked') {
+      $(this).removeClass('is_checked');
       return;
     }
+    $(this).addClass('is_checked');
     $('input#hidden_sstate').val($('input#hidden_bstate').val());
     $("#billing input, #billing select").each(function() {
       $("#shipping #"+ $(this).attr('id').replace('bill', 'ship')).val($(this).val());
@@ -290,7 +291,7 @@ var update_shipping_methods = function(methods) {
       i.attr('checked', 'checked');
     }
     var l = $(document.createElement('label'))
-                .attr('for', s)
+                .attr('for', this.id)
                 .html(s);
     $('div#methods').append($(p).append(i).append(l));
   });

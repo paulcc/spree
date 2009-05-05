@@ -373,11 +373,19 @@ div#checkout
       h2
         :background transparent url(/images/steps/2_small.png) top left no-repeat
   #shipping
-    label#use_billing
-      :top -3px
-    input#checkout_same_address
-      :border none
-      :width 12px
+    span#clear_same_address
+      :clear both
+      :display block
+    span#checkout_same_address
+      :float left
+      :display block
+      :border 1px solid #BBB
+      :width 20px
+      :height 20px
+      &:hover
+        :cursor pointer
+      &.is_checked
+        :background transparent url(/images/checkmark.png) top right no-repeat
     :background transparent url(/images/steps/3.png) top right no-repeat
     &.completed,&.disabled
       :background-image none
