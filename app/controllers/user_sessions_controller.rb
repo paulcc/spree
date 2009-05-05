@@ -1,6 +1,7 @@
 class UserSessionsController < Spree::BaseController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => :destroy
+  ssl_required :new, :create, :destroy, :update
     
   def new
     @user_session = UserSession.new
@@ -31,5 +32,9 @@ class UserSessionsController < Spree::BaseController
     reset_session                                      # useful for clearing things
     flash[:notice] = t("you_have_been_logged_out")
     redirect_to products_path
+  end
+  
+  def login_bar
+    render :partial => "shared/login_bar"
   end
 end

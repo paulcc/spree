@@ -1,5 +1,6 @@
 <h2><%= t("shipping_method") %></h2>
 <div class="inner">
+<<<<<<< HEAD:app/views/orders/_shipping_method.html.erb
 	<div id="methods"></div>
         <% if Spree::Config[:shipping_instructions] %>
           <p id="minstrs">
@@ -8,4 +9,13 @@
           </p>
         <% end %>
 	<p><input id="select_shipping_method" type="button" value="<%=t("continue")%>"/></p>
+=======
+  <div id="methods"></div>
+  <div class="error">
+    <%= t('unable_ship_method') %>
+  </div>
+  <div class="form-buttons">
+    <input id="continue_shipping_method" type="button" class="button primar" value="<%=t("continue")%>"/>
+  </div>
+>>>>>>> f446c96a6c5958ad4b832f176925eed0fbd09674:app/views/orders/_shipping_method.html.erb
 </div>
