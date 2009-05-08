@@ -351,10 +351,11 @@ div#checkout
       :width 15px
   #registration
     :background transparent url(/images/steps/1.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/1_small.png) top left no-repeat
+        :padding-left 32px
     div#registration_choice
       :float left
       :block none
@@ -368,10 +369,11 @@ div#checkout
       :display none
   #billing
     :background transparent url(/images/steps/2.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/2_small.png) top left no-repeat
+        :padding-left 32px
   #shipping
     span#clear_same_address
       :clear both
@@ -387,7 +389,7 @@ div#checkout
       &.is_checked
         :background transparent url(/images/checkmark.png) top right no-repeat
     :background transparent url(/images/steps/3.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/3_small.png) top left no-repeat
@@ -396,26 +398,29 @@ div#checkout
     div.inner
       :padding-top 0px
     :background transparent url(/images/steps/4.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/4_small.png) top left no-repeat
+        :padding-left 32px
     div.error
       :display none
   #payment
     :background transparent url(/images/steps/5.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/5_small.png) top left no-repeat
+        :padding-left 32px
     p select
       :width 75px
   #confirmation
     :background transparent url(/images/steps/6.png) top right no-repeat
-    &.completed,&.disabled
+    &.completed,&.disabled,&
       :background-image none
       h2
         :background transparent url(/images/steps/6_small.png) top left no-repeat
+        :padding-left 32px
     table.order-summary
       .price, .qty
         :width 165px
@@ -490,7 +495,7 @@ a.button,input.button
     :font-weight bold
     :color #000
   &:hover
-    :background-image url(/images/buttons/bg-button-hover.png) !important
+    // pcc -- hard to override -- :background-image url(/images/buttons/bg-button-hover.png) !important
     //:outline solid 2px #cdf
   &.large
     :font-size 1.4em !important
