@@ -155,7 +155,7 @@ var validate_section = function(region) {
 };
 
 var shift_to_region = function(active) {
-  if (active != regions[0]) { $('div#flash-errors').remove(); }
+  if (active != regions[0]) { $('div.flash.errors').remove(); }
   var found = 0;
   for(var i=0; i<regions.length; i++) {
     if(!found) {
