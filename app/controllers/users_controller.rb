@@ -12,7 +12,7 @@ class UsersController < Spree::BaseController
     flash nil
     wants.html { redirect_back_or_default products_path }
     wants.js { render :js => true.to_json }
-    failure.wants.html { render :new }
+    failure.wants.html { render :template => 'user_sessions/new' }
     failure.wants.js { render :js => @user.errors.to_json }    
   end
 
