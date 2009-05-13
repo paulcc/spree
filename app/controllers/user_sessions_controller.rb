@@ -18,7 +18,7 @@ class UserSessionsController < Spree::BaseController
         else
           flash.now[:error] = t("login_failed")
           @user = User.new :email => params[:user_session][:email]
-          render :template => 'users/new'
+          render :template => 'user_sessions/new'
         end
       }
       format.js {
