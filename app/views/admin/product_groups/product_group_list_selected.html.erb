@@ -1,11 +1,11 @@
 <%= render :partial => 'admin/shared/product_sub_menu' %>
 
-<%= render :partial => 'admin/shared/product_group_tabs', :locals => {:current => "products"} %>
+<%= render :partial => 'product_group_tabs', :locals => {:current => "products"} %>
 
 <h1><%= t("editing_product_group") %></h1>
 
 <%= error_messages_for :product_group %>
 <% form_for(:product_group, :url => admin_product_group_url(@product_group), :html => { :method => :put }) do |f| %>
-  <%= render :partial => "admin/shared/#{@product_group.group_type.underscore}_form", :locals => { :f => f } %>
+  <%= render :partial => "#{@product_group.group_type.underscore}_form", :locals => { :f => f } %>
   <%= render :partial => 'admin/shared/edit_resource_links' %>
 <% end %>

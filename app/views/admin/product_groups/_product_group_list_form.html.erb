@@ -1,6 +1,6 @@
 <!-- Included Product List -->
 <div id="selected-products">
-<%= render :partial => "admin/shared/#{@product_group.group_type.underscore}_product_table", :locals => {:product_group => @product_group} %>
+<%= render :partial => "#{@product_group.group_type.underscore}_product_table", :locals => {:product_group => @product_group} %>
 </div>
 <!-- Product Search -->
 <% form_tag('#') do %>

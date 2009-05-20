@@ -31,41 +31,6 @@ class Admin::ProductsController < Admin::BaseController
     wants.html {redirect_to edit_admin_product_url(Product.find(@product.id)) }
   end
   
-  def selected
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      @products = @product_group.products
-      render :action => "#{@product_group.group_type.underscore}_selected"
-    end
-  end
-
-  def available
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      if params[:q].blank?
-        @available_products = []
-      else
-        @available_products = Product.find(:all, :conditions => ['lower(name) LIKE ?', "%#{params[:q].downcase}%"])
-      end
-      @available_products.delete_if { |product| @product_group.products.include? product }
-      respond_to do |format|
-        format.html
-        format.js {render :action => "#{@product_group.group_type.underscore}_available", :layout => false}
-      end
-    end
-  end
-
-  def select
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      @product = Product.find_by_permalink(params[:id])
-      if @product_group.respond_to? :<<
-          @product_group << @product 
-      end
-      render :partial => "admin/shared/#{@product_group.group_type.underscore}_product_table", :locals => {:product_group => @product_group}
-    end
-  end
-
   # override the destory method to set deleted_at value 
   # instead of actually deleting the product.
   def destroy

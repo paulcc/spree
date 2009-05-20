@@ -66,6 +66,6 @@ EOT
     unless node.product_group.nil?
       result << " -- #{node.product_group.name}"
     end
-    result
+    escape_javascript(result)
   end
 end
