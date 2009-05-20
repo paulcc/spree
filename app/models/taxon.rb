@@ -10,7 +10,7 @@ class Taxon < ActiveRecord::Base
   validate :product_group_only_on_leaf_node
     
   def products
-    product_group.products
+    self.leaf? ? product_group.products : cached_product_group.products
   end
   
   # This is--for you recursive types--a depth first traversal of
@@ -18,18 +18,18 @@ class Taxon < ActiveRecord::Base
   # Union of ordered sets is somewhat undefined, but we are not going
   # to treat that here.  That is going to be up to the ProductSet
   # module and the union method to handle...probably.
-  alias :ar_associated_product_group :product_group
-  def product_group
-    if self.leaf?
-      return ar_associated_product_group
-    else
-      @product_group = children.first.product_group
-      children[0..-2].each_index do |i|
-        @product_group = @product_group.union(children[i+1].product_group)
-      end
-      return @product_group
-    end
-  end
+#  alias :ar_associated_product_group :product_group
+#  def product_group
+#    if self.leaf?
+#      return ar_associated_product_group
+#    else
+#      @product_group = children.first.product_group
+#      children[0..-2].each_index do |i|
+#        @product_group = @product_group.union(children[i+1].product_group)
+#      end
+#      return @product_group
+#    end
+#  end
 
   private
   def set_permalink
@@ -56,6 +56,23 @@ class Taxon < ActiveRecord::Base
     if !self.product_group.nil? && !self.leaf?
       error.add_to_base("Cannot assign a product group to a non leaf node taxon")
     end
+  end
+
+  private
+  # This is--for you recursive types--a depth first traversal of
+  # the taxonomy tree.  Union is associative, so we're all good.
+  # Union of ordered sets is somewhat undefined, but we are not going
+  # to treat that here.  That is going to be up to the ProductSet
+  # module and the union method to handle...probably.
+  def cached_product_group
+    return @cached_product_group if  @cached_product_group && @valid_product_group_cache
+
+    @cached_product_group = children.first.product_group
+    children[0..-2].each_index do |i|
+      @cached_product_group = @cached_product_group.union(children[i+1].product_group)
+    end
+    @valid_product_group_cache = true
+    return @cached_product_group
   end
 
 end
