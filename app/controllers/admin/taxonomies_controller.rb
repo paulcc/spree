@@ -5,7 +5,7 @@ class Admin::TaxonomiesController < Admin::BaseController
   update.wants.html {redirect_to collection_url}
   
   create.after do
-    taxon = Taxon.new(:name => @taxonomy.name, :taxonomy_id => @taxonomy.id, :position => 1 )
+    taxon = Taxon.new(:name => @taxonomy.name, :taxonomy_id => @taxonomy.id, :position => 0 )
     taxon.save
   end
   

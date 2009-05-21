@@ -1,8 +1,11 @@
 <% if taxon.children.length != 0 %>
   <ul>
     <% taxon.children.each do |child| %>
-      <li id="<%= child.id %>" rel="taxon">
-        <a href="#"><%= child.name %></a>
+      <li id="<%= child.id %>">
+        <a href="#"><%= child.name %></a> 
+  	  <% unless child.product_group.nil? %>
+  	  	-- <%= child.product_group.name %>
+  	  <% end %>
         <% if child.children.length > 0 %>
           <%= render :partial => "taxon", :locals => {:taxon => child} %>
         <% end %>
