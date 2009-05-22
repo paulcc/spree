@@ -123,6 +123,22 @@ var handle_delete = function(li, tree, rb){
 	delete_confirmed = false;
 };
 
+var debug_holder = function(node, tree){
+	if (true) {
+		var noop = false;
+	}
+	return noop;
+}
+
+var node_has_product_group = function(node) {
+	return $(node[0]).hasClass("has-product-group");
+}
+
+var node_can_add_product_group = function(node) {
+	if (node_has_product_group(node)) return false;
+	return $(node[0]).hasClass("leaf");
+}
+
 conf = { 
   ui : {
     theme_path  : "/javascripts/jsTree/source/themes/",
@@ -163,9 +179,23 @@ conf = {
             label   : "Paste",
             icon    : "paste.png",
             visible : function (NODE, TREE_OBJ) { if(NODE.length != 1 || NODE[0].id == 'root') return false; return true; }, 
-            action  : function (NODE, TREE_OBJ) { TREE_OBJ.open_branch(NODE); TREE_OBJ.paste(NODE); jQuery(NODE).children(":last").children(":last").show(); } 
-        }
-
+            action  : function (NODE, TREE_OBJ) { TREE_OBJ.open_branch(NODE); TREE_OBJ.paste(NODE); $(NODE).children(":last").children(":last").show(); } 
+        },
+		"separator",
+		{
+			id		: "add_product_group",
+			label	: "Add Product Group",
+			icon	: "create.png",
+			visible	: function (NODE, TREE_OBJ) { return node_can_add_product_group(NODE); },
+			action	: function (NODE, TREE_OBJ) { debug_holder(NODE, TREE_OBJ); return true; }
+		},
+		{
+			id		: "rm_product_group",
+			label	: "Remove Product Group",
+			icon	: "remove.png",
+			visible	: function (NODE, TREE_OBJ) { return node_has_product_group(NODE); },
+			action	: function (NODE, TREE_OBJ) { debug_holder(NODE, TREE_OBJ); return true; }
+		}
     ]
   },
   lang : {
