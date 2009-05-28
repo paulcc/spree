@@ -1,0 +1,5 @@
+<ul>
+  <% taxon.children.each do |child| %>
+    <%= render :partial => 'taxon', :locals => { :taxon => child } %>
+  <% end %>
+</ul>

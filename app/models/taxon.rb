@@ -42,7 +42,7 @@ class Taxon < ActiveRecord::Base
   # taken from the find_by_param plugin
   def escape(str)
     return "" if str.blank? # hack if the str/attribute is nil/blank
-    s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str.dup).to_s
+    str = Iconv.iconv('ascii//ignore//translit', 'utf-8', str.dup).to_s
     returning str.dup.to_s do |s|
       s.gsub!(/\ +/, '-') # spaces to dashes, preferred separator char everywhere
       s.gsub!(/[^\w^-]+/, '') # kill non-word chars except -
@@ -58,14 +58,13 @@ class Taxon < ActiveRecord::Base
     end
   end
 
-  private
   # This is--for you recursive types--a depth first traversal of
   # the taxonomy tree.  Union is associative, so we're all good.
   # Union of ordered sets is somewhat undefined, but we are not going
   # to treat that here.  That is going to be up to the ProductSet
   # module and the union method to handle...probably.
   def cached_product_group
-    return @cached_product_group if  @cached_product_group && @valid_product_group_cache
+    return @cached_product_group if @cached_product_group && valid_product_group_cache
 
     @cached_product_group = children.first.product_group
     children[0..-2].each_index do |i|
@@ -73,6 +72,10 @@ class Taxon < ActiveRecord::Base
     end
     @valid_product_group_cache = true
     return @cached_product_group
+  end
+
+  def valid_product_group_cache
+    return false
   end
 
 end

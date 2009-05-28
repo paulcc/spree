@@ -1,18 +1,12 @@
-<% if taxon.children.length != 0 %>
-  <ul>
-    <% taxon.children.each do |child| %>
-      <% if child.product_group %>
-        <li id="<%= child.id %>" class="has-product-group">
-          <a href="#"><%= child.name %></a> 
-  	    -- <%= child.product_group.name %>
-      <% else %>
-  	  <li id="<%= child.id %>">
-          <a href="#"><%= child.name %></a> 
-      <% end %>
-      <% if child.children.length > 0 %>
-        <%= render :partial => "taxon", :locals => {:taxon => child} %>
-      <% end %>
-        </li>
-    <% end %>
-  </ul>
+<% if taxon.product_group %>
+  <li id="<%= taxon.id %>" class="has-product-group" rel="taxon">
+    <a href="#"><%= taxon.name %></a> 
+    -- <span id="<%= taxon.product_group.id %>"class="product-group"><%= taxon.product_group.name %></span>
+<% else %>
+  <li id="<%= taxon.id %>" rel="taxon">
+    <a href="#"><%= taxon.name %></a> 
 <% end %>
+  <% if taxon.children.length > 0 %>
+    <%= render :partial => "taxons", :locals => {:taxon => taxon} %>
+  <% end %>
+  </li>

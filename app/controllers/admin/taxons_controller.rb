@@ -1,7 +1,7 @@
 class Admin::TaxonsController < Admin::BaseController
   include Railslove::Plugins::FindByParam::SingletonMethods
   resource_controller
-  before_filter :load_object, :only => [:selected, :available, :remove]
+  before_filter :load_object, :only => [:selected, :available]
   belongs_to :product
   
   create.wants.html {render :text => @taxon.id}
@@ -44,51 +44,60 @@ class Admin::TaxonsController < Admin::BaseController
   end
 
   def selected 
-    @taxons = @product.taxons
   end
   
   def available
-    if params[:q].blank?
-      @available_taxons = []
-    else
-      @available_taxons = Taxon.find(:all, :conditions => ['lower(name) LIKE ?', "%#{params[:q].downcase}%"])
+    if params[:taxon_id]
+      # looking for available product groups to add to a taxon
+      @taxon = Taxon.find(params[:taxon_id])
+      
+      if params[:q].blank?
+        @available_product_groups = []
+      else
+        @available_product_groups = ProductGroup.find(:all, :conditions => ['lower(name) LIKE ?', "%#{params[:q].downcase}%"])
+      end
+#      respond_to do |format|
+#        format.html
+#        format.js { render :layout => false }
+#      end
+      render :action => :product_group_available,
+             :layout => false
     end
-    @available_taxons.delete_if do |taxon| 
-      @product.taxons.include?(taxon) ||
-      !taxon.leaf? ||
-      !(taxon.product_group.nil? || taxon.product_group.respond_to?(:<<))
-    end
-    respond_to do |format|
-      format.html
-      format.js {render :layout => false}
-    end
-
   end
   
   def remove
-    @taxon.product_group.remove(@product)
-    @taxons = @product.taxons
-    render :layout => false
+    @taxon = Taxon.find(params[:taxon_id])
+    @product_group = ProductGroup.find(params[:id])
+    if @taxon.product_group == @product_group
+      @taxon.product_group = nil
+      @taxon.save
+  end 
+
+#    respond_to do |format|
+#      format.html
+#      format.js do 
+        render :layout => false, 
+               :partial => '/admin/taxonomies/taxon.html.erb', 
+               :locals => { :taxon => @taxon }
+#      end
+#    end
   end  
   
   def select
-    @product = Product.find_by_param!(params[:product_id])
-    taxon = Taxon.find(params[:id])
-    if taxon.product_group.nil?
-      logger.debug("Setting up a new product group")
-      list = ProductGroupList.new
-      list.save
-      group = ProductGroup.new(:name => taxon.permalink,
-                               :group => list )
-      group.save
-      taxon.product_group = group
-      taxon.save
-      logger.debug("Taxon: #{taxon.inspect}")
+    if params[:taxon_id]
+      @taxon = Taxon.find(params[:taxon_id])
+      @product_group = ProductGroup.find(params[:id])
+      @taxon.product_group = @product_group unless @taxon.product_group
     end
-    logger.debug("Taxon: #{taxon.inspect}, #{taxon.product_group.inspect}")
-    taxon.product_group << @product
-    @taxons = @product.taxons
-    render :layout => false
+#    respond_to do |format|
+#      format.html
+#      format.js do 
+        render :layout => false, 
+               :partial => '/admin/taxonomies/taxon.html.erb', 
+               :locals => { :taxon => @taxon }
+#      end
+#    end
+
   end
   
 end

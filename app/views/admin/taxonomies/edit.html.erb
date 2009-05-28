@@ -14,7 +14,7 @@
         <ul>
           <li id="<%= @taxonomy.root.id %>" class="open" rel="root">
             <a href="#"><%= @taxonomy.root.name %></a>
-            <%= render :partial => "taxon", :locals => {:taxon => @taxonomy.root} %>
+            <%= render :partial => "taxons", :locals => {:taxon => @taxonomy.root} %>
           </li>
         </ul>
       </div>
@@ -28,3 +28,29 @@
 	  <%= button t("update") %> <%= t("or") %> <%= link_to t("cancel"), admin_taxonomies_path %>
   </p>
 <% end %>
+
+<div id="product-group-select" style="display:none">
+  <div id="product-group-select-searching" style="display:none">
+  	Searching &nbsp; <%= image_tag "spinner.gif" %>
+  </div>
+  <% form_tag('#') do %>
+    <label><%= t('search') %>:</label>
+    <input id="product-group-select-searchtext" size="25">
+  <% end %>
+
+  
+  <% javascript_tag do %> 
+    var product_group_select_glob=null;
+    $('#product-group-select-searchtext').bind("change",
+      function(event) {$.ajax({ beforeSend:function(request){$('#product-group-select-searching').show;}, 
+                    	        complete:function(request){$('#product-group-select-searching').hide;}, 
+                                data:'q=' + this.value + '&authenticity_token=' + encodeURIComponent(AUTH_TOKEN), 
+                                success:function(request){$('#product-group-select-search-hits').html(request);}, 
+                                type:'get', 
+	                            url:'<%= admin_taxons_url %>/' + product_group_select_glob.taxon_id + '/product_groups/available' })});
+  <% end %>
+  <br/>                 
+  <div id="product-group-select-search-hits"></div>
+  Cancel Button Here
+</div>
+

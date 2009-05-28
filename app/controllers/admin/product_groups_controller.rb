@@ -39,6 +39,7 @@ class Admin::ProductGroupsController < Admin::BaseController
   
   def available
     if params[:product_group_id]
+      # looking for products available to add to this product group
       @product_group = ProductGroup.find(params[:product_group_id])
       if params[:q].blank?
         @available_products = []

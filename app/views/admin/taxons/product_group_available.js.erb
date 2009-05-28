@@ -1,0 +1,38 @@
+<script type="text/javascript">
+  function displayRow(){
+    var row = document.getElementById("captionRow");
+    if (row.style.display == '') row.style.display = 'none';
+    else row.style.display = '';
+  }
+</script>
+<h4><%= t('available_product_groups') %></h4>
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= t("name") %></th>
+      <th><%= t("type") %></th>
+      <th>&nbsp;</th>
+      </tr>
+  </thead>
+  <tbody>
+  <% @available_product_groups.each do |pg| %>
+      <tr id="<%= dom_id(pg) %>">
+        <td><%= pg.name %></td>
+        <td><%= pg.group_type %></td>
+	<td class="actions">
+          <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(pg, :spinner)}" %>
+          <%= link_to_remote icon('add') + ' ' + t('select'), 
+                      {:url => select_admin_taxon_product_group_path(@taxon, pg),
+		              :loading => "$(#{dom_id(pg, :spinner)}).show",
+#		              :update => 'selected-products',
+		              :complete => "$('#{dom_id(pg)}').remove; (#{dom_id(pg, :spinner)}).hide;",
+                      :success => "product_group_select_glob.success_handler(request)" }, 
+                      :class => 'iconlink'%>
+        </td>        
+      </tr>
+    <% end %>
+    <% if @available_product_groups.empty? %>
+     <tr><td colspan="3"><%= t('no_match_found') %>.</td></tr>
+    <% end %>
+  </tbody>
+</table>

@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :configurations
     admin.resources :products, :has_many => [:variants, :images, :product_properties] do |product|
       product.resources :option_types, :member => {:select => :get, :remove => :get}, :collection => {:available => :get, :selected => :get}
-      product.resources :taxons, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected => :get}
+#      product.resources :taxons, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected => :get}
 #      product.resources :product_groups, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected=> :get}
     end
     admin.resources :images
@@ -82,6 +82,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :taxonomies do |taxonomy|
       taxonomy.resources :taxons
     end 
+    admin.resources :taxons do |taxon|
+      taxon.resources :product_groups, 
+        :controller => :taxons, 
+        :member => { :select => :post, :remove => :delete }, 
+        :collection => {:available => :get, :selected => :get }
+    end
     admin.resources :reports, :only => [:index, :show], :collection => {:sales_total => :get}
 
     admin.resources :shipments
@@ -92,8 +98,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :product_groups do |product_group|
       product_group.resources :products, 
         :controller => :product_groups, 
-        :member => {:select => :post, :remove => :post}, 
-        :collection => {:available => :post, :selected=> :get}
+        :member => {:select => :post, :remove => :delete}, 
+        :collection => {:available => :get, :selected => :get}
     end
   end                   
 
