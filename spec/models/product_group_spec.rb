@@ -29,6 +29,9 @@ module ProductGroupSpecHelper
 end
 
 describe ProductGroup do
+  self.fixture_path = RAILS_ROOT + '/db/sample' 
+  fixtures :products
+
   include ProductGroupSpecHelper
   
   before(:each) do

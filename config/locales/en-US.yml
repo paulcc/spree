@@ -164,6 +164,7 @@ en-US:
   add_option_types: "Add Option Types"
   add_option_value: "Add Option Value"
   add_product_properties: "Add Product Properties"
+  add_remove_products: "Add/Remove Products"
   add_state: "Add State"
   add_to_cart: "Add To Cart"
   add_zone: "Add Zone"
@@ -189,6 +190,7 @@ en-US:
   authorization_failure: "Authorization Failure"
   authorized: Authorized
   available_on: "Available On"
+  available_products: "Available Products"
   available_taxons: "Available Taxons"
   back: Back
   back_to_store: "Go Back To Store"
@@ -331,6 +333,10 @@ en-US:
   meta_description: "Meta Description"
   meta_keywords: "Meta Keywords"
   metadata: "Metadata"
+  missing_parent_error: "Invalid Taxon ID for Parent"
+  missing_product_error: "Invalid or missing Product ID"
+  missing_product_group_error: "Invalid or missing ProductGroup ID"
+  missing_taxon_error: "Invalid or missing Taxon ID"
   month: "Month"
   my_account: "My Account"
   my_orders: "My Orders"    
@@ -446,6 +452,7 @@ en-US:
   sales_totals_description: "Sales Total For All Orders"
   save_preferences: Save Preferences           
   search: Search
+  searching: Searching
   secure_connection_type: Secure Connection Type
   select: Select
   select_from_prototype: "Select From Prototype"
@@ -515,6 +522,8 @@ en-US:
   subtotal: Subtotal
   subtract: Subtract
   system: System
+  target_product_group_not_assigned_to_taxon_error: "Indicated ProductGroup is not assigned to this Taxon.  Not Removing."
+  target_taxon_already_has_product_group_error: "Taxon already has a ProductGroup assigned to it"
   tax: Tax
   tax_categories: "Tax Categories"
   tax_categories_setting_description: "Set up tax categories to identify which products should be taxable."

@@ -63,8 +63,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :configurations
     admin.resources :products, :has_many => [:variants, :images, :product_properties] do |product|
       product.resources :option_types, :member => {:select => :get, :remove => :get}, :collection => {:available => :get, :selected => :get}
-#      product.resources :taxons, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected => :get}
-#      product.resources :product_groups, :member => {:select => :post, :remove => :post}, :collection => {:available => :post, :selected=> :get}
     end
     admin.resources :images
     admin.resources :option_types
@@ -86,7 +84,7 @@ ActionController::Routing::Routes.draw do |map|
       taxon.resources :product_groups, 
         :controller => :taxons, 
         :member => { :select => :post, :remove => :delete }, 
-        :collection => {:available => :get, :selected => :get }
+        :collection => {:available => :get }
     end
     admin.resources :reports, :only => [:index, :show], :collection => {:sales_total => :get}
 

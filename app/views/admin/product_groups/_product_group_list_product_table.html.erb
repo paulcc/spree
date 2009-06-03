@@ -12,6 +12,7 @@
       <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product, :rem_spinner)}" %>		                         
       <%= link_to_remote icon('delete') + ' ' + t('remove'), 
 	  {:url => remove_admin_product_group_product_url(product_group, product),
+      :method => 'DELETE',
       :loading => "Element.show(#{dom_id(product, :rem_spinner)})",
       :update => 'selected-products',
       :complete => "$('#{dom_id(product, :sel)}').remove(); Element.hide(#{dom_id(product, :rem_spinner)});"}, :class => 'iconlink' %>

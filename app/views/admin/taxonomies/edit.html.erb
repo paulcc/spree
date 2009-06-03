@@ -31,7 +31,7 @@
 
 <div id="product-group-select" style="display:none">
   <div id="product-group-select-searching" style="display:none">
-  	Searching &nbsp; <%= image_tag "spinner.gif" %>
+  	<%= t("searching") %> &nbsp; <%= image_tag "spinner.gif" %>
   </div>
   <% form_tag('#') do %>
     <label><%= t('search') %>:</label>
@@ -39,18 +39,32 @@
   <% end %>
 
   
-  <% javascript_tag do %> 
-    var product_group_select_glob=null;
-    $('#product-group-select-searchtext').bind("change",
-      function(event) {$.ajax({ beforeSend:function(request){$('#product-group-select-searching').show;}, 
-                    	        complete:function(request){$('#product-group-select-searching').hide;}, 
-                                data:'q=' + this.value + '&authenticity_token=' + encodeURIComponent(AUTH_TOKEN), 
-                                success:function(request){$('#product-group-select-search-hits').html(request);}, 
-                                type:'get', 
-	                            url:'<%= admin_taxons_url %>/' + product_group_select_glob.taxon_id + '/product_groups/available' })});
-  <% end %>
   <br/>                 
   <div id="product-group-select-search-hits"></div>
-  Cancel Button Here
+  <p class="form-buttons">
+    <%= button_link_to_function t('cancel'), %q{product_group_select_clear()} %>
+  </p>
 </div>
+
+<% javascript_tag do %> 
+  var product_group_select_glob = null;
+  var product_group_select_clear = function() {
+    product_group_select_glob = null;
+    $('#product-group-select-searchtext').val('');
+	$('#product-group-select-search-hits').html('');
+	$('#product-group-select-searching').hide();
+	$('#product-group-select').hide();
+  };
+	
+  $(document).ready(function() {
+  $('#product-group-select-searchtext').delayedObserver(function() {
+     $.ajax({ beforeSend:function(request){$('#product-group-select-searching').show;}, 
+              complete:function(request){$('#product-group-select-searching').hide;}, 
+              data:'q=' + this[0].value + '&authenticity_token=' + encodeURIComponent(AUTH_TOKEN), 
+              success:function(request){$('#product-group-select-search-hits').html(request);}, 
+              error: generic_ajax_error,
+              type:'get',  
+	          url:'<%= admin_taxons_url %>/' + product_group_select_glob.taxon_id + '/product_groups/available' }, 0.75)}); 
+	});
+<% end %>
 

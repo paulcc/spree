@@ -3,40 +3,45 @@ class Taxon < ActiveRecord::Base
 
   acts_as_adjacency_list :foreign_key => 'parent_id', :order => 'position'
   belongs_to :taxonomy
-#  has_and_belongs_to_many :products
   belongs_to :product_group
   before_save :set_permalink  
+  after_validation_on_update :update_permalinks_on_name_change
 
   validate :product_group_only_on_leaf_node
+  validate :parent_has_no_product_group
     
   def products
     self.leaf? ? product_group.products : cached_product_group.products
   end
-  
-  # This is--for you recursive types--a depth first traversal of
-  # the taxonomy tree.  Union is associative, so we're all good.
-  # Union of ordered sets is somewhat undefined, but we are not going
-  # to treat that here.  That is going to be up to the ProductSet
-  # module and the union method to handle...probably.
-#  alias :ar_associated_product_group :product_group
-#  def product_group
-#    if self.leaf?
-#      return ar_associated_product_group
-#    else
-#      @product_group = children.first.product_group
-#      children[0..-2].each_index do |i|
-#        @product_group = @product_group.union(children[i+1].product_group)
-#      end
-#      return @product_group
-#    end
-#  end
 
-  private
+  def move_to!(new_parent, new_position)
+    # if the taxon is switching parents, then it needs to update
+    # its permalink and the permalink of all of its children
+    reset_permalinks = new_parent != self.parent 
+    super 
+    if reset_permalinks
+      self.set_permalink.save!
+      self.descendents.each do |taxon|
+       taxon.set_permalink.save!
+      end
+    end
+    self
+  end
+
+  protected
   def set_permalink
     ancestors.reverse.collect { |ancestor| ancestor.name }.join( "/")
     prefix = ancestors.reverse.collect { |ancestor| escape(ancestor.name) }.join( "/")
     prefix += "/" unless prefix.blank?
     self.permalink =  prefix + "#{name.to_url}/"
+  end
+
+  private
+  def update_permalinks_on_name_change    # PCC keep? 
+    if name_changed?
+      set_permalink
+      descendents.each { |taxon| taxon.set_permalink.save }
+    end
   end
   
   # taken from the find_by_param plugin
@@ -53,8 +58,14 @@ class Taxon < ActiveRecord::Base
   end
 
   def product_group_only_on_leaf_node
-    if !self.product_group.nil? && !self.leaf?
-      error.add_to_base("Cannot assign a product group to a non leaf node taxon")
+    if self.product_group && !self.leaf?
+      errors.add_to_base("Cannot assign a product group to a non leaf node taxon")
+    end
+  end
+
+  def parent_has_no_product_group
+    if self.parent && self.parent.product_group
+      errors.add_to_base("Cannot assign child taxon to a taxon which already has a product group")
     end
   end
 

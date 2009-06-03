@@ -1,7 +1,8 @@
 class Admin::ProductGroupsController < Admin::BaseController
   resource_controller
 
-  before_filter :load_object, :only => [:selected, :available]
+  before_filter :load_product_group_with_render, :only => [:selected, :available]
+  before_filter :load_product_group_and_product_with_render, :only => [:remove, :select]
 
   new_action.response do |wants|
     wants.html {render :action => :new, :layout => false}
@@ -18,51 +19,58 @@ class Admin::ProductGroupsController < Admin::BaseController
   end
 
   def remove
-    partial = 'product_group_remove'
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      product = Product.find_by_permalink(params[:id])
-      @product_group.remove(product)
-      partial = "#{@product_group.group_type.underscore}_product_table"
-    end
-
-    render :partial => partial, :locals => {:product_group => @product_group}, :layout => false
+    return unless @product_group && @product
+    @product_group.remove(@product)
+    render :partial => @product_group.view_name(:product_table), 
+           :locals => {:product_group => @product_group}, 
+           :layout => !request.xhr?
   end
 
   def selected
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      @products = @product_group.products
-      render :action => "#{@product_group.group_type.underscore}_selected"
-    end
+    return unless @product_group
+    @products = @product_group.products
+    render :action => @product_group.view_name(:selected)
   end
   
   def available
-    if params[:product_group_id]
-      # looking for products available to add to this product group
-      @product_group = ProductGroup.find(params[:product_group_id])
-      if params[:q].blank?
-        @available_products = []
-      else
-        @available_products = Product.find(:all, :conditions => ['lower(name) LIKE ?', "%#{params[:q].downcase}%"])
-      end
-      @available_products.delete_if { |product| @product_group.products.include? product }
-      respond_to do |format|
-        format.html
-        format.js {render :action => "#{@product_group.group_type.underscore}_available", :layout => false}
-      end
+    return unless @product_group
+    if params[:q].blank?
+      @available_products = []
+    else
+      @available_products = Product.find(:all, :conditions => ['lower(name) LIKE ?', "%#{params[:q].downcase}%"])
     end
+    @available_products.delete_if { |product| @product_group.products.include? product }
+    render :action => @product_group.view_name(:available), :layout => !request.xhr?
   end
 
   def select
-    if params[:product_group_id]
-      @product_group = ProductGroup.find(params[:product_group_id])
-      @product = Product.find_by_permalink(params[:id])
-      if @product_group.respond_to? :<<
-          @product_group << @product 
-      end
-      render :partial => "#{@product_group.group_type.underscore}_product_table", :locals => {:product_group => @product_group}
+    return unless @product_group && @product
+    if @product_group.respond_to? :<<
+        @product_group << @product 
     end
+    render :partial => @product_group.view_name(:product_table), 
+           :locals => {:product_group => @product_group}, 
+           :layout => !request.xhr?
   end
+
+  private
+  def load_product_group_with_render
+    @product_group = ProductGroup.find_by_id(params[:product_group_id]) if params[:product_group_id]
+    render(:text => t("missing_product_group_error"), :status => 404) unless @product_group
+  end
+
+  def load_product_group_and_product_with_render
+    errors = Array.new
+    @product_group = ProductGroup.find_by_id(params[:product_group_id]) if params[:product_group_id]
+    errors << t("missing_product_group_error") unless @product_group
+
+    @product = Product.find_by_permalink(params[:id]) if params[:id]
+    errors << t("missing_product_error") unless @product
+
+    render(:partial => '/admin/shared/errors', 
+           :locals => {:errors => errors}, 
+           :status => 404) unless @product_group && @product
+  end
+
 
 end

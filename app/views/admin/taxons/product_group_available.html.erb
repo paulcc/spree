@@ -19,15 +19,18 @@
       <tr id="<%= dom_id(pg) %>">
         <td><%= pg.name %></td>
         <td><%= pg.group_type %></td>
-	<td class="actions">
+	    <td class="actions">
           <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(pg, :spinner)}" %>
-          <%= link_to_remote icon('add') + ' ' + t('select'), 
-                      {:url => select_admin_taxon_product_group_path(@taxon, pg),
-		              :loading => "$(#{dom_id(pg, :spinner)}).show",
-#		              :update => 'selected-products',
-		              :complete => "$('#{dom_id(pg)}').remove; (#{dom_id(pg, :spinner)}).hide;",
-                      :success => "product_group_select_glob.success_handler(request)" }, 
-                      :class => 'iconlink'%>
+          <%= link_to_function icon('add') + ' ' + t('select'), %Q{$.ajax({
+		        type:"POST",
+		        url:'#{select_admin_taxon_product_group_path(@taxon, pg)}',
+		        data:({_method: "post", authenticity_token: AUTH_TOKEN}),
+                dataType:'html',
+		        beforeSend:function(req) { $(#{dom_id(pg, :spinner)}).show(); },
+		        error:generic_ajax_error,
+                complete:function(req, status) { $('#{dom_id(pg)}').remove(); $('#{dom_id(pg, :spinner)}').hide(); },
+		        success:product_group_select_glob.success_handler})},
+              :class => 'iconlink' %>
         </td>        
       </tr>
     <% end %>

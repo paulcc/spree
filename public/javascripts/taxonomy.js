@@ -16,8 +16,14 @@ var hide_progress = function(){
 var handle_ajax_error = function(XMLHttpRequest, textStatus, errorThrown){
 	jQuery.tree_rollback(last_rollback);
 	jQuery("#progress").hide();
-	jQuery("#ajax_error").show().html("<strong>" + server_error + "</strong><br/>" + taxonomy_tree_error);
+	jQuery("#ajax_error").show().html("<strong>" + server_error + "</strong><br/>" + taxonomy_tree_error + "<br/>" + XMLHttpRequest.responseText);
 };
+
+var generic_ajax_error = function(XMLHttpRequest, textStatus, errorThrown){
+	$("#progress").hide();
+	$("#ajax_error").show().html("<strong>" + server_error + "</strong><br/>" + XMLHttpRequest.responseText );
+};
+ 
 
 var handle_move = function(li, target, droppped, tree, rb) {
 	last_rollback = rb;
@@ -139,30 +145,32 @@ var node_can_add_product_group = function(node) {
 	return $(node[0]).hasClass("leaf");
 }
 
-var taxon_product_group_remove = function(li) {
+var taxon_product_group_remove = function(li, tree) {
 	var taxon_id= li.id;
 	var product_group_id = $(li).children('.product-group')[0].id;
 	$.ajax({
 		type: "DELETE",
 		url: "/admin/taxons/" + taxon_id + "/product_groups/" + product_group_id + "/remove",
-		data: ({_method: "post", authenticity_token: AUTH_TOKEN}),
+		data: ({_method: "delete", authenticity_token: AUTH_TOKEN}),
+        dataType: 'html',
 		beforeSend: show_progress,
 		error: handle_ajax_error,
-		success: function (data, textStatus) { taxon_update_node(li, data); hide_progress(); }
+		success: function (data, textStatus) { taxon_update_node(li, tree, data); hide_progress(); }
 	});	
 };
 
-var taxon_update_node = function(node, html){
-	$(node).html(html);
-//	tree_component.reselect($(node));
+var taxon_update_node = function(node, tree, html){
+	var container = node.parentNode;
+	$(node).before(html).remove();
+	tree.refresh(container);
 };
 
-var taxon_product_group_add = function(li) {
+var taxon_product_group_add = function(li, tree) {
 	var taxon_id = li.id;
-    product_group_select_taxon_id = taxon_id;
+    product_group_select_clear();
 	product_group_select_glob = {
 		taxon_id : taxon_id,
-		success_handler: function(data) { alert(data); taxon_update_node(li, data); },
+		success_handler: function(data) { taxon_update_node(li, tree, data); product_group_select_clear(); },
 		failure_handler: function(response) {},
 	};
 	$('#product-group-select').show();	
@@ -216,14 +224,14 @@ conf = {
 			label	: "Add Product Group",
 			icon	: "create.png",
 			visible	: function (NODE, TREE_OBJ) { return node_can_add_product_group(NODE); },
-			action	: function (NODE, TREE_OBJ) { taxon_product_group_add(NODE[0]); return true; }
+			action	: function (NODE, TREE_OBJ) { taxon_product_group_add(NODE[0], TREE_OBJ); return true; }
 		},
 		{
 			id		: "rm_product_group",
 			label	: "Remove Product Group",
 			icon	: "remove.png",
 			visible	: function (NODE, TREE_OBJ) { return node_has_product_group(NODE); },
-			action	: function (NODE, TREE_OBJ) { taxon_product_group_remove(NODE[0]); return true; }
+			action	: function (NODE, TREE_OBJ) { taxon_product_group_remove(NODE[0], TREE_OBJ); return true; }
 		}
     ]
   },

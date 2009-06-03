@@ -3,6 +3,7 @@ require 'test/unit'
 require 'rubygems'
 
 require 'active_record'
+require 'set'
 
 $:.unshift File.dirname(__FILE__) + '/../lib'
 require File.dirname(__FILE__) + '/../init'
@@ -68,13 +69,42 @@ class AdjacencyListTest < Test::Unit::TestCase
     @root_child2 = AdjacencyListMixin.create! :parent_id => @root1.id
     @root2 = AdjacencyListMixin.create!
     @root3 = AdjacencyListMixin.create!
+
+    @root1.reload
+    @root_child1.reload
+    @root_child2.reload
+    @child1_child.reload
   end
 
   def teardown
     teardown_db
   end
 
-  def test_children
+  def test_ordered
+    assert AdjacencyListMixin.ordered?
+    assert_equal AdjacencyListMixin.ordered, 'position'
+  end
+
+  def test_before_create_with_position
+    node = AdjacencyListMixin.create!(:position => 3)
+    assert node.valid?
+    assert_equal node.position, 3
+  end
+  
+  def test_before_create_wo_position
+    node = AdjacencyListMixin.create!(:position => nil)
+    assert node.valid?
+    assert_equal node.position, 0
+  end
+  
+  def test_before_create_wo_position_with_parent
+    l = @root1.children.length
+    node = AdjacencyListMixin.create!(:parent => @root1, :position => nil)
+    assert node.valid?
+    assert_equal node.position, l
+  end
+  
+  def test_children_first
     assert_equal @root1.children, [@root_child1, @root_child2]
     assert_equal @root_child1.children, [@child1_child]
     assert_equal @child1_child.children, []
@@ -129,26 +159,45 @@ class AdjacencyListTest < Test::Unit::TestCase
   end
 
   def test_roots
-    assert_equal [@root1, @root2, @root3], AdjacencyListMixin.roots
+    assert AdjacencyListMixin.roots.include? @root1
+    assert AdjacencyListMixin.roots.include? @root2
+    assert AdjacencyListMixin.roots.include? @root3
+  end
+
+  def test_children_second
+    root = AdjacencyListMixin.create!(:position => 0)
+    a0 = AdjacencyListMixin.create!({:parent => root, :position => 0})
+    a1 = AdjacencyListMixin.create!({:parent => root, :position => 1})
+    a2 = AdjacencyListMixin.create!({:parent => root, :position => 2})    
+    a3 = AdjacencyListMixin.create!({:parent => root, :position => 3})
+
+    assert_equal root, a0.parent
+    root.reload
+    assert_equal [a0, a1, a2, a3], root.children
   end
 
   def test_siblings
-    assert_equal [@root2, @root3], @root1.siblings
     assert_equal [@root_child2], @root_child1.siblings
     assert_equal [], @child1_child.siblings
     assert_equal [@root_child1], @root_child2.siblings
-    assert_equal [@root1, @root3], @root2.siblings
-    assert_equal [@root1, @root2], @root3.siblings
+    assert ([@root2, @root3].to_set ^ @root1.siblings.to_set).empty?
+    assert ([@root1, @root3].to_set ^ @root2.siblings.to_set).empty?
+    assert ([@root1, @root2].to_set ^ @root3.siblings.to_set).empty?
   end
 
-  def test_self_and_siblings
-    assert_equal [@root1, @root2, @root3], @root1.self_and_siblings
+  def test_root_self_and_siblings
+    s1 = [@root1, @root2, @root3].to_set
+    s2 = @root1.self_and_siblings.to_set
+
+    assert (s1 ^ s2).empty?
+  end
+  
+  def test_ordered_self_and_siblings
     assert_equal [@root_child1, @root_child2], @root_child1.self_and_siblings
     assert_equal [@child1_child], @child1_child.self_and_siblings
     assert_equal [@root_child1, @root_child2], @root_child2.self_and_siblings
-    assert_equal [@root1, @root2, @root3], @root2.self_and_siblings
-    assert_equal [@root1, @root2, @root3], @root3.self_and_siblings
-  end           
+end
+
 
   def test_descendants
     assert_equal [@root_child1, @child1_child, @root_child2], @root1.descendents
@@ -201,25 +250,37 @@ class AdjacencyListTest < Test::Unit::TestCase
     assert_equal [@root_child2], @root1.children
   end
 
-  def test_insert_at
+  def test_insert_at!
     node0 = AdjacencyListMixin.create!
-    node0.insert_at(@root1)
+    node0.insert_at!(@root1)
+    @root1.reload
     assert @root1.children.include?(node0)
     assert_equal [@root_child1, @root_child2, node0], @root1.children
-    teardown
+  end
 
-    setup
-    node0 = AdjacencyListMixin.create!
-    node0.insert_at(@root1, 0)
-    assert @root1.children.include?(node0)
+  def test_move_to!
+    @child1_child.move_to!(@root3)
+    @root3.reload
     @root_child1.reload
-    @root_child2.reload
-    assert_equal [node0, @root_child1, @root_child2], @root1.children
+    
+    assert_equal [@child1_child], @root3.children
+    assert ! @root_child1.children.include?(@child1_child)
+  end
+  
+  def test_move_to!_with_position
+    root = AdjacencyListMixin.create!(:position => 0)
+    a0 = AdjacencyListMixin.create!({:parent => root, :position => 0})
+    a1 = AdjacencyListMixin.create!({:parent => root, :position => 1})
+    a2 = AdjacencyListMixin.create!({:parent => root, :position => 2})    
+    a3 = AdjacencyListMixin.create!({:parent => root, :position => 3})
+    b1 = AdjacencyListMixin.create!({:parent => a3, :position => 0})
 
-    node1 = AdjacencyListMixin.create!
-    node1.insert_at(@child1_child)
-    assert node1.leaf?
-    assert_equal [node1], @child1_child.children
+    root.reload
+    a3.reload
+    
+    b1.move_to!(root,2)
+    root.reload
+    assert_equal [a0, a1, b1, a2, a3], root.children
   end
 end
 

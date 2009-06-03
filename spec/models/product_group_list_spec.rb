@@ -29,6 +29,9 @@ module ProductGroupListSpecHelper
 end
 
 describe ProductGroupList do
+  self.fixture_path = RAILS_ROOT + '/db/sample' 
+  fixtures :products
+ 
   include ProductGroupListSpecHelper
 
   before(:each) do
@@ -39,18 +42,23 @@ describe ProductGroupList do
   it "should initialize with an empty list" do
     @list.products.should be_empty
   end
+
   it "should allow products to be appended to the list" do
     @list << prod_list_a
     @list.products.should == prod_list_a
+
     @list << @prod
     @list.products.should == prod_list_a + [@prod]
   end
+
   it "should allow product to be inserted into the list" do
     pending "I'll implement this some day"
   end
+
   it "should allow products to be re-ordered in the list" do
     pending "acts as list can already do this, I just need to hook it up"
   end
+
   it "should not be possible to have the same product in the list more than once" do
     @list << @prod << @prod
     @list.products.should == [@prod]

@@ -3,6 +3,7 @@ class ProductGroup < ActiveRecord::Base
   has_many :taxons
 
   before_validation_on_create :attempt_instantiate_group
+  validate :valid_product_group_type
 
   include ProductSet
 
@@ -28,6 +29,12 @@ class ProductGroup < ActiveRecord::Base
       return super(method_id, *args)
     end
   end
+
+  def view_name(action)
+    "#{self.group_type.underscore}_#{action.to_s}"
+  end
+
+  ## Class Stuff
 
   @@registered_methods_by_class = {}
   @@registered_classes = {}
@@ -58,6 +65,12 @@ class ProductGroup < ActiveRecord::Base
         self.group_type && @@registered_classes[Kernel.const_get(self.group_type)]
       self.group = Kernel.const_get(self.group_type).new
       self.group_type = nil
+    end
+  end
+
+  def valid_product_group_type
+    unless self.group.class && @@registered_classes[self.group.class]
+      errors.add_to_base("Valid ProductGroup Type required")
     end
   end
 

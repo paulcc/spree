@@ -48,19 +48,19 @@ module ActiveRecord
           belongs_to :parent, :class_name => name, :foreign_key => configuration[:foreign_key], :counter_cache => configuration[:counter_cache]
           has_many :children, :class_name => name, :foreign_key => configuration[:foreign_key], :order => configuration[:order], :dependent => :destroy
 
-          after_destroy { |node| node.reorder_and_save(node.siblings) }
-          before_create { |node| node.position ||= node.parent.children.length }
-          after_create  { |node| node.reorder_and_save(node.self_and_siblings) }
+          after_destroy { |node| node.reorder_and_save!(node.siblings) }
+          before_create { |node| node.position ||= node.parent && node.parent.children.length || 0 }
+          after_create  { |node| node.reorder_and_save!(node.self_and_siblings) }
 
           class_eval <<-EOV
             include ActiveRecord::Acts::AdjacencyList::InstanceMethods
 
-	    def self.ordered
-	          #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}}
+	          def self.ordered
+	            #{configuration[:order].nil? ? "nil" : %Q{"#{configuration[:order]}"}}
             end
 
-	    def self.ordered?
-	          #{configuration[:order].nil? ? false : true}
+	          def self.ordered?
+	            #{!configuration[:order].nil?}
             end
 
             def self.roots
@@ -139,7 +139,7 @@ module ActiveRecord
         def prune
           self.reload
           self.destroy
-          reorder_and_save(siblings)
+          reorder_and_save!(siblings)
         end
 
         def prune_back
@@ -148,27 +148,27 @@ module ActiveRecord
           if siblings.empty?
             parent.prune_back unless parent.nil?
           else
-            reorder_and_save(siblings)
+            reorder_and_save!(siblings)
           end
         end
 
         ## this function is for inserting a new node into the tree
-        def insert_at(parent = nil, position = -1)
-          self.parent_id = parent.nil? ? nil : parent.id
+        def insert_at!(parent = nil, position = -1)
+          self.parent = parent
           position = parent.children.length if parent && position == -1
           self.position = position
-          self.save
+          self.save!
           self.reload
 
-          reorder_and_save(siblings.insert(self.position, self))
+          reorder_and_save!(siblings.insert(self.position, self))
           self
         end
 
         ## this function is for moving node from one part of the tree to another
-        def move_to(parent = nil, position = -1)
+        def move_to!(parent = nil, position = -1)
           orig_parent = self.parent
-          insert_at(parent, position)
-          reorder_and_save(orig_parent.children) unless 
+          insert_at!(parent, position)
+          reorder_and_save!(orig_parent.children) unless 
             orig_parent.nil? || orig_parent == parent
           self
         end
@@ -176,13 +176,13 @@ module ActiveRecord
         def decrement_position(count = 1)
           self.position -= count;
           self.position = 0 if self.position < 0;
-          reorder_and_save(siblings.insert(self.position, self))
+          reorder_and_save!(siblings.insert(self.position, self))
           self
         end
 
         def increment_position(count = 1)
           self.position += count;
-          reorder_and_save(siblings.insert(self.position, self))
+          reorder_and_save!(siblings.insert(self.position, self))
           self
         end
 
@@ -213,7 +213,7 @@ module ActiveRecord
           raise "Please implement merge_match? in your class"
         end    
 
-        def reorder_and_save(nodes)
+        def reorder_and_save!(nodes)
 #          puts "reorder_and_save start"
           nodes.compact!
           nodes.each_with_index do |node, i|

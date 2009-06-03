@@ -1,17 +1,18 @@
+<h3><%= @product_group.name %> -- <%= t("add_remove_products") %></h3>
+
 <!-- Included Product List -->
 <div id="selected-products">
-<%= render :partial => "#{@product_group.group_type.underscore}_product_table", :locals => {:product_group => @product_group} %>
+<%= render :partial => @product_group.view_name(:product_table), :locals => {:product_group => @product_group} %>
 </div>
 <!-- Product Search -->
-<% form_tag('#') do %>
   <label><%= t('search') %>:</label>
   <input id="searchtext" size="25">
-<% end %>
 
 <div id="searching" style="display:none">
-  Searching &nbsp; <%= image_tag "spinner.gif" %>  
+  <%= t('searching') %> &nbsp; <%= image_tag "spinner.gif" %>  
 </div>
 <%= observe_field(:searchtext,
+				  :method => 'GET',
                   :frequency => 0.75,
                   :update => :search_hits,
                   :loading => "Element.show('searching')",
