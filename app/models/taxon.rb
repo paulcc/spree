@@ -11,7 +11,7 @@ class Taxon < ActiveRecord::Base
   validate :parent_has_no_product_group
     
   def products
-    self.leaf? ? product_group.products : cached_product_group.products
+    cached_product_group.products
   end
 
   def move_to!(new_parent, new_position)
@@ -34,6 +34,24 @@ class Taxon < ActiveRecord::Base
     prefix = ancestors.reverse.collect { |ancestor| escape(ancestor.name) }.join( "/")
     prefix += "/" unless prefix.blank?
     self.permalink =  prefix + "#{name.to_url}/"
+  end
+
+  # This is--for you recursive types--a depth first traversal of
+  # the taxonomy tree.  Union is associative, so we're all good.
+  # Union of ordered sets is somewhat undefined, but we are not going
+  # to treat that here.  That is going to be up to the ProductSet
+  # module and the union method to handle...probably.
+  def cached_product_group
+    return @cached_product_group if @cached_product_group && valid_product_group_cache
+
+    @cached_product_group = self.product_group || ProductGroupEphemeral.new([])
+    return @cached_product_group if self.leaf?
+    
+    children.each do |child|
+      @cached_product_group = @cached_product_group.union(child.cached_product_group)
+    end
+
+    return @cached_product_group
   end
 
   private
@@ -69,21 +87,6 @@ class Taxon < ActiveRecord::Base
     end
   end
 
-  # This is--for you recursive types--a depth first traversal of
-  # the taxonomy tree.  Union is associative, so we're all good.
-  # Union of ordered sets is somewhat undefined, but we are not going
-  # to treat that here.  That is going to be up to the ProductSet
-  # module and the union method to handle...probably.
-  def cached_product_group
-    return @cached_product_group if @cached_product_group && valid_product_group_cache
-
-    @cached_product_group = children.first.product_group
-    children[0..-2].each_index do |i|
-      @cached_product_group = @cached_product_group.union(children[i+1].product_group)
-    end
-    @valid_product_group_cache = true
-    return @cached_product_group
-  end
 
   def valid_product_group_cache
     return false

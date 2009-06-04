@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require 'set'
 
 module TaxonHelper
   def valid_taxon_attributes
@@ -77,14 +78,14 @@ describe Taxon do
   end
 
   it "should not allow assigning a product group to a non leaf taxon" do
-    pg = ProductGroup.new(:name => 'Test', :group_type => :product_group_list)
+    pg = ProductGroup.new(:name => 'Test', :group_type => :ProductGroupList)
 
     @t_b2.product_group = pg
     @t_b2.should_not be_valid
   end
 
   it "should not allow assigning a child node to a taxon with a product group" do
-    pg = ProductGroup.new(:name => 'Test', :group_type => :product_group_list)
+    pg = ProductGroup.new(:name => 'Test', :group_type => :ProductGroupList)
 
     @t_a3.product_group = pg
     @t_a3.should be_valid
@@ -94,6 +95,44 @@ describe Taxon do
     rescue Exception => e
       @t_c2.should_not be_valid
     end
-   
+   end
+
+  it "should list its own products if it is a leaf node" do
+    pg = ProductGroup.new(:name => 'Test', :group_type => :ProductGroupList)
+    p1 = Product.new({:name => "prod1", :master_price => 3, :description => "test prod1" }) 
+    p2 = Product.new({:name => "prod2", :master_price => 3, :description => "test prod2" }) 
+    pg.save!
+    @t_c2.product_group = pg
+    pg << p1
+    pg << p2
+    
+    @t_c2.products.should == [p1, p2]
   end
+
+  it "should list empty array if it is a leaf node with no product group" do
+    @t_c2.products.should == []
+  end
+
+  it "should list the union of its decendents products if it is not a leaf node" do
+    pg1 = ProductGroup.new(:name => 'Test', :group_type => :ProductGroupList)
+    pg2 = ProductGroup.new(:name => 'Test2', :group_type => :ProductGroupList)
+    pg1.save!
+    pg2.save!
+    @t_c1.product_group = pg1
+    @t_c2.product_group = pg2
+    p1 = Product.new({:name => "prod1", :master_price => 3, :description => "test prod1" }) 
+    p2 = Product.new({:name => "prod2", :master_price => 3, :description => "test prod2" }) 
+    p3 = Product.new({:name => "prod3", :master_price => 3, :description => "test prod3" }) 
+ 
+    pg1 << p1
+    pg2 << p2
+    pg2 << p3
+
+    @t_c1.save!
+    @t_c2.save!
+    @t_b2.reload
+
+   (@t_b2.products.to_set ^ [p1, p2, p3].to_set).should be_empty 
+ end
+   
 end
