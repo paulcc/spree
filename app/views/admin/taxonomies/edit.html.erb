@@ -50,18 +50,18 @@
   var product_group_select_glob = null;
   var product_group_select_clear = function() {
     product_group_select_glob = null;
-    $('#product-group-select-searchtext').val('');
-	$('#product-group-select-search-hits').html('');
-	$('#product-group-select-searching').hide();
-	$('#product-group-select').hide();
+    jQuery('#product-group-select-searchtext').val('');
+	jQuery('#product-group-select-search-hits').html('');
+	jQuery('#product-group-select-searching').hide();
+	jQuery('#product-group-select').hide();
   };
 	
-  $(document).ready(function() {
-  $('#product-group-select-searchtext').delayedObserver(function() {
-     $.ajax({ beforeSend:function(request){$('#product-group-select-searching').show;}, 
-              complete:function(request){$('#product-group-select-searching').hide;}, 
+  jQuery(document).ready(function() {
+  jQuery('#product-group-select-searchtext').delayedObserver(function() {
+     jQuery.ajax({ beforeSend:function(request){jQuery('#product-group-select-searching').show;}, 
+              complete:function(request){jQuery('#product-group-select-searching').hide;}, 
               data:'q=' + this[0].value + '&authenticity_token=' + encodeURIComponent(AUTH_TOKEN), 
-              success:function(request){$('#product-group-select-search-hits').html(request);}, 
+              success:function(request){jQuery('#product-group-select-search-hits').html(request);}, 
               error: generic_ajax_error,
               type:'get',  
 	          url:'<%= admin_taxons_url %>/' + product_group_select_glob.taxon_id + '/product_groups/available' }, 0.75)}); 

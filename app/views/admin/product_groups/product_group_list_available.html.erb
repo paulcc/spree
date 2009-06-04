@@ -23,9 +23,10 @@
           <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product, :spinner)}" %>
           <%= link_to_remote icon('add') + ' ' + t('select'), 
                              {:url => select_admin_product_group_product_path(@product_group, product),
-		              :loading => "Element.show(#{dom_id(product, :spinner)})",
+                      :method => 'POST',
+		              :loading => "Element.show('#{dom_id(product, :spinner)}')",
 		              :update => 'selected-products',
-		              :complete => "$('#{dom_id(product)}').remove(); Element.hide(#{dom_id(product, :spinner)});"}, :class => 'iconlink' %>
+		              :complete => "Element.remove('#{dom_id(product)}');  Element.hide('#{dom_id(product, :spinner)}');"}, :class => 'iconlink' %>
         </td>        
       </tr>
     <% end %>
