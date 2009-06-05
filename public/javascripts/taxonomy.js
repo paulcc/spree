@@ -221,7 +221,7 @@ conf = {
 		"separator",
 		{
 			id		: "add_product_group",
-			label	: "Add Product Group",
+			label	: "Link to Product Group",
 			icon	: "create.png",
 			visible	: function (NODE, TREE_OBJ) { return node_can_add_product_group(NODE); },
 			action	: function (NODE, TREE_OBJ) { taxon_product_group_add(NODE[0], TREE_OBJ); return true; }
