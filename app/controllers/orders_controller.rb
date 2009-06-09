@@ -69,9 +69,14 @@ class OrdersController < Spree::BaseController
     find_order
   end   
   
-  def prevent_editing_complete_order      
+  def prevent_editing_complete_order      	# or missing
     load_object
-    redirect_to object_url if @order.checkout_complete
+    if (@order.nil?)
+      flash[:error] = t('order_not_in_system') 
+      redirect_to products_path
+    else 
+      redirect_to object_url if @order.checkout_complete
+    end
   end         
   
   def load_data     
