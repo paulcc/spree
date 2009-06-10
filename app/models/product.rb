@@ -93,6 +93,14 @@ class Product < ActiveRecord::Base
     end
   end
   
+  # persist all of the image size ratios 
+  # (order of saving images to assets/ is causing problems)
+  def save_image_sizes
+    images.each do |i| 
+      i.attachment_size = (i.find_dimension * 100).truncate; 
+      i.save
+    end
+  end
   
   
   private

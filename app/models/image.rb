@@ -4,4 +4,13 @@ class Image < Asset
                     :default_style => :product,
                     :url => "/assets/products/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
+
+  # save dimensions as height/width, to support easy finding of scaled height from various widths
+  # seems this can't be called until very late, has to have files in assets/ etc
+  def find_dimension
+    original_file = File.join('.', 'public', attachment.url(:original).gsub(/\?\d+$/, ''))
+    info = `identify #{original_file}`
+    info =~ /.*?(\d+)x(\d+).*/
+    $1.blank? || $2.blank? ? 1 : ($2.to_f / $1.to_f)
+  end
 end
