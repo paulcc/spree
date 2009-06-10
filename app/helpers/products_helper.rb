@@ -30,7 +30,7 @@ module ProductsHelper
   
   # converts line breaks in product description into <p> tags (for html display purposes)
   def product_description(product)
-    product.description.gsub(/^(.*)$/, '<p>\1</p>')
+    "<p>" + product.description.gsub(/^\s*$/, '</p><p>') + "</p>"
   end  
   
   # generates nested url to product based on supplied taxon
