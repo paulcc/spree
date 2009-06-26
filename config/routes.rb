@@ -77,6 +77,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :orders, :has_many => [:payments, :creditcards], :member => {:fire => :put, :resend => :post}
     admin.resources :orders do |order|
       order.resources :creditcard_payments, :member => {:capture => :get}
+      order.resources :paypal_payments, :member => {:capture => :get}
     end
     admin.resource :general_settings
     admin.resources :taxonomies do |taxonomy|

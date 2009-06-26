@@ -23,7 +23,8 @@
       <td><%= payment.class.to_s %></td>
       <!-- TODO: don't assume credit card, make it possible to edit other kinds of payments -->
       <td>
-        <%= link_to_with_icon 'edit', t('edit'), edit_admin_order_creditcard_payment_url(@order, payment) %>
+        <% url = payment.type == "CreditcardPayment" ? edit_admin_order_creditcard_payment_url(@order, payment) : edit_admin_order_paypal_payment_url(@order, payment) %>
+        <%= link_to_with_icon 'edit', t('edit'), url %>
       </td>
     </tr>
   <% end %>
