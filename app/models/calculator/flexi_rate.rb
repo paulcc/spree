@@ -11,18 +11,26 @@ class Calculator::FlexiRate < Calculator
     true
   end
 
-  def compute(object = nil)
-    object ||= self.calculable
-    
-    sum = 0
+  def self.register
+    super
+    Coupon.register_calculator(self)
+    ShippingMethod.register_calculator(self)
+    ShippingRate.register_calculator(self)
+  end
+
+  def compute(order)
+    return if order.nil?
+    compute_from_quantity(order.line_items.map(&:quantity).sum)
+  end
+
+  def compute_from_quantity(item_count)
     max = self.preferred_max_items
-    object.length.times do |i|
-      if (i % max == 0) && (max > 0)
-        sum += self.preferred_first_item
-      else
-        sum += self.preferred_additional_item
-      end
+    result = 0
+    if max > 0
+      result = [max,item_count].min * self.preferred_first_item 
     end
-    return(sum)
+    result += [item_count - max, 0].max * self.preferred_additional_item
+
+    return result
   end  
 end
