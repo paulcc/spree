@@ -119,6 +119,7 @@ class Creditcard < ActiveRecord::Base
   end
   
   def validate_essential_attributes #:nodoc:
+    errors.add :month, "FOO BAR"
     errors.add :first_name, "cannot be empty" if first_name.blank?
     errors.add :last_name, "cannot be empty" if last_name.blank?
     errors.add :month, "is not a valid month" unless valid_month?(month)

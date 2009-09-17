@@ -1,24 +1,37 @@
+require 'singleton'
+
+# provides a buffer between Spree data and ActiveMerchant services
+#
 module Spree
-  module PaymentGateway    
-    def authorize(amount)
+  class PaymentGateway    
+    include Singleton
+
+    def authorize(checkout)
+      amount = checkout.order.total
+      puts "CO = #{checkout.inspect}"
+      puts "CC = #{checkout.creditcard.inspect}"
+      card   = create_card(checkout) # .creditcard)
+
       gateway = payment_gateway       
       # ActiveMerchant is configured to use cents so we need to multiply order total by 100
-      response = gateway.authorize((amount * 100).to_i, self, gateway_options)      
+      response = gateway.authorize((amount * 100).to_i, card, gateway_options(checkout))      
+
       gateway_error(response) unless response.success?
-      
+
       # create a creditcard_payment for the amount that was authorized
-      creditcard_payment = checkout.order.creditcard_payments.create(:amount => 0, :creditcard => self)
+      spree_card = Creditcard.new checkout.creditcard      
+      creditcard_payment = checkout.order.creditcard_payments.create(:amount => 0, :creditcard => spree_card)
       # create a transaction to reflect the authorization
       creditcard_payment.creditcard_txns << CreditcardTxn.new(
-        :amount => amount,
+        :amount        => amount,
         :response_code => response.authorization,
-        :txn_type => CreditcardTxn::TxnType::AUTHORIZE
+        :txn_type      => CreditcardTxn::TxnType::AUTHORIZE
       )
     end
 
-    def capture(authorization)
+    def capture(authorization,order)
       gw = payment_gateway
-      response = gw.capture((authorization.amount * 100).to_i, authorization.response_code, minimal_gateway_options)
+      response = gw.capture((authorization.amount * 100).to_i, authorization.response_code, minimal_gateway_options(order))
       gateway_error(response) unless response.success?          
       creditcard_payment = authorization.creditcard_payment
       # create a transaction to reflect the capture
@@ -60,14 +73,29 @@ module Spree
              response.params['response_reason_text'] ||
              response.message
       msg = "#{I18n.t('gateway_error')} ... #{text}"
-      logger.error(msg)
+      ActiveRecord::Base.logger.error(msg)
       raise Spree::GatewayError.new(msg)
     end
-        
-    def gateway_options
-      options = {:billing_address => generate_address_hash(checkout.bill_address), 
+
+    def create_card(checkout)
+      creditcard = checkout.creditcard
+      creditcard[:type] = creditcard[:cc_type] = spree_cc_type
+      creditcard[:first_name] = checkout.bill_address.firstname
+      creditcard[:last_name]  = checkout.bill_address.lastname
+
+      fields = %w[number month year type first_name last_name verification_value start_month start_year issue_number]
+      card = ActiveMerchant::Billing::CreditCard.new(creditcard.slice(*fields))
+      unless card.valid?
+        # checkout.creditcard = card  # try this (to transfer validation errs) -- didn't seem to work
+        raise "Invalid credit card -- #{card.errors.inspect} <br> #{card.inspect} <br> #{creditcard.inspect}" 
+      end
+      card
+    end
+
+    def gateway_options(checkout)
+      options = {:billing_address  => generate_address_hash(checkout.bill_address), 
                  :shipping_address => generate_address_hash(checkout.shipment.address)}
-      options.merge minimal_gateway_options
+      options.merge minimal_gateway_options(checkout.order)
     end    
     
     # Generates an ActiveMerchant compatible address hash from one of Spree's address objects
@@ -80,19 +108,20 @@ module Spree
     # Generates a minimal set of gateway options.  There appears to be some issues with passing in 
     # a billing address when authorizing/voiding a previously captured transaction.  So omits these 
     # options in this case since they aren't necessary.  
-    def minimal_gateway_options
-      {:email => checkout.email, 
-       :customer => checkout.email, 
-       :ip => checkout.ip_address, 
-       :order_id => checkout.order.number,
-       :shipping => checkout.order.ship_total * 100,
-       :tax => checkout.order.tax_total * 100, 
-       :subtotal => checkout.order.item_total * 100}  
+    def minimal_gateway_options(order)
+      {:email    => order.checkout.email, 
+       :customer => order.checkout.email, 
+       :ip       => order.checkout.ip_address, 
+       :order_id => order.number,
+       :shipping => order.ship_total * 100,
+       :tax      => order.tax_total * 100, 
+       :subtotal => order.item_total * 100}  
     end
     
+    # determine the CC type, with an exception for bogus mode
     def spree_cc_type
       return "visa" if ENV['RAILS_ENV'] == "development" and Spree::Gateway::Config[:use_bogus]
-      self.class.type?(number)
+      ActiveMerchant::Billing::CreditCard.type?(number)
     end
 
     # instantiates the selected gateway and configures with the options stored in the database

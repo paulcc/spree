@@ -18,18 +18,16 @@ class Checkout < ActiveRecord::Base
 
   private
   def authorize_creditcard
-    return unless process_creditcard? 
-    cc = Creditcard.new(creditcard.merge(:address => self.bill_address, :checkout => self))
-    return unless cc.valid? and cc.authorize(order.total)
-    order.complete
+    return unless process_creditcard?   # can proceed
+    return false unless Spree::PaymentGateway.instance.authorize(self)   # return errors via exceptions only
+    return false unless order.complete
   end
 
   def capture_creditcard
     return unless process_creditcard? 
-    cc = Creditcard.new(creditcard.merge(:address => self.bill_address, :checkout => self))
-    return unless cc.valid? and cc.purchase(order.total)
-    order.complete
-    order.pay
+    return false unless Spree::PaymentGateway.instance.purchase(self)
+    return false unless order.complete
+    order.pay # just a state change? can fail but normally shouldn't
   end
 
   def process_creditcard?

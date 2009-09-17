@@ -4,7 +4,7 @@ require_dependency 'application'
 class PaymentGatewayExtension < Spree::Extension
   version "1.0"
   description "Provides basic payment gateway functionality.  User specifies an ActiveMerchant compatible gateway 
-  to use in the aplication."
+  to use in the application."
 
   def activate  
     # Set the global "gateway mode" for active merchant (depending on what environment we're in)
@@ -12,7 +12,7 @@ class PaymentGatewayExtension < Spree::Extension
     # Mixin the payment_gateway method into the base controller so it can be accessed by the checkout process, etc.
     Creditcard.class_eval do
       # add gateway methods to the creditcard so we can authorize, capture, etc.
-      include Spree::PaymentGateway
+      # TO GO -- include Spree::PaymentGateway
     end
   end
 end
