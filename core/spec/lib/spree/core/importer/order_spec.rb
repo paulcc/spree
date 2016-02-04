@@ -12,12 +12,14 @@ module Spree
       let(:shipping_method) { create(:shipping_method) }
       let(:payment_method) { create(:check_payment_method) }
 
-      let(:product) { product = Spree::Product.create(:name => 'Test',
-                                             :sku => 'TEST-1',
-                                             :price => 33.22)
-                      product.shipping_category = create(:shipping_category)
-                      product.save
-                      product }
+      let(:product) do
+        product = Spree::Product.create(name: 'Test',
+                                        sku: 'TEST-1',
+                                        price: 33.22, available_on: Time.current - 1.day)
+        product.shipping_category = create(:shipping_category)
+        product.save
+        product
+      end
 
       let(:variant) { variant = product.master
                       variant.stock_items.each { |si| si.update_attribute(:count_on_hand, 10) }

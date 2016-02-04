@@ -51,6 +51,10 @@ module Spree
       end
     end
 
+    def available?
+      product.available?
+    end
+
     def self.active(currency = nil)
       joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
